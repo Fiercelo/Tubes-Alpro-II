@@ -16,7 +16,7 @@ func main() {
 	cetakData(data, nData)
 }
 
-func bacaData() {
+func bacaData(A *tabPinjaman, n *int) {
 	var i int
 	
 	fmt.Scan(n)
@@ -24,10 +24,24 @@ func bacaData() {
 		fmt.Scan(&A[i].nama, &A[i].pinjaman, &A[i].tenor)
 	}
 
-func cetakData() {
+func cetakData(A tabPinjaman, n int) {
 	var i int
 	
 	for i = 0; i < n; i++ {
 		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
+	}
+}
+
+func menu() {
+	var pilih int
+	for pilih != 0 {
+		fmt.Println("________________________________________")
+		fmt.Println("|           PINJAMAN ONLINE            |")
+		fmt.Println("________________________________________")
+		fmt.Println("1. Masukkan Data Diri ")
+		fmt.Println("2. Ubah Data Diri")
+		fmt.Println("3. Tambah Data Diri")
+		fmt.Println("4. Hapus Data Diri")
+		fmt.Println("0. EXIT ")
 	}
 }
