@@ -4,7 +4,7 @@ import "fmt"
 const NMAX int = 100
 type pinjaman struct {
   nama string
-  pinjaman, tenor int
+  pinjaman, tenor, pilih int
 }
 type tabPinjaman[NMAX] pinjaman
 
@@ -12,8 +12,11 @@ func main() {
 	var data tabPinjaman
 	var nData int
 
-	bacaData(&data, nData)
-	cetakData(data, nData)
+	menu() 
+	fmt.Scan(&pilih)
+	for pilih != 0 {
+
+	}
 }
 
 func bacaData(A *tabPinjaman, n *int) {
@@ -33,15 +36,13 @@ func cetakData(A tabPinjaman, n int) {
 }
 
 func menu() {
-	var pilih int
-	for pilih != 0 {
-		fmt.Println("________________________________________")
-		fmt.Println("|           PINJAMAN ONLINE            |")
-		fmt.Println("________________________________________")
-		fmt.Println("1. Masukkan Data Diri ")
-		fmt.Println("2. Ubah Data Diri")
-		fmt.Println("3. Tambah Data Diri")
-		fmt.Println("4. Hapus Data Diri")
-		fmt.Println("0. EXIT ")
-	}
+	fmt.Println("________________________________________")
+	fmt.Println("|           PINJAMAN ONLINE            |")
+	fmt.Println("________________________________________")
+	fmt.Println("1. Masukkan Data Diri ")
+	fmt.Println("2. Ubah Data Diri")
+	fmt.Println("3. Tambah Data Diri")
+	fmt.Println("4. Hapus Data Diri")
+	fmt.Println("0. EXIT ")
+	fmt.Println("Pilih No -> ")
 }
