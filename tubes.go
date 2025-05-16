@@ -11,11 +11,11 @@ func main() {
 }
 
 func bacaData() {
-  var i int
+	var i int
 	fmt.Scan(n)
-	for I = 0; I < *n; I++ {
-	  fmt.Scan(&A[i].nama, &A[i].pinjaman, &A[i].tenor)
-}
+	for i = 0; i < *n; i++ {
+		fmt.Scan(&A[i].nama, &A[i].pinjaman, &A[i].tenor)
+	}
 
 func cetakData() {
   
