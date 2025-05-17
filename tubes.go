@@ -21,7 +21,7 @@ func bacaData(A *tabPinjaman, n *int) {
 	fmt.Print("Jumlah data yang ingin dimasukkan: ")
 	fmt.Scan(n)
 	for i = 0; i < *n; i++ {
-		fmt.Printf("Data ke-%d:\n", i)
+		fmt.Printf("\nData ke-%d\n", i+1)
 		fmt.Print("Nama: ")
 		fmt.Scan(&A[i].nama)
 
@@ -35,7 +35,7 @@ func bacaData(A *tabPinjaman, n *int) {
 }
 
 func tambahData(A *tabPinjaman, n *int) {
-	fmt.Println("Tambahkan data yang ingin dimasukkan: ")
+	fmt.Println("Tambahkan data yang ingin dimasukkan")
 
 	fmt.Print("Nama: ")
 	fmt.Scan(&A[*n].nama)
@@ -48,6 +48,33 @@ func tambahData(A *tabPinjaman, n *int) {
 	*n = *n + 1
 
 	fmt.Println("Data berhasil ditambahkan")
+}
+
+func ubahData(A *tabPinjaman, n int) {
+	var i int
+	var nama string
+	var found bool = false
+
+	fmt.Print("Masukkan nama yang ingin diubah: ")
+	fmt.Scan(&nama)
+
+	for i = 0; i < n && found == false; i++ {
+		if A[i].nama == nama {
+			fmt.Println("Ganti data yang ingin diubah")
+
+			fmt.Print("Nama: ")
+			fmt.Scan(&A[i].nama)
+
+			fmt.Print("Pinjaman: ")
+			fmt.Scan(&A[i].pinjaman)
+
+			fmt.Print("Tenor(bulan): ")
+			fmt.Scan(&A[i].tenor)
+		}
+	}
+	if found != true {
+		fmt.Println("Data tidak ditemukan")
+	}
 }
 
 func cetakData(A tabPinjaman, n int) {
@@ -83,6 +110,8 @@ func menu() {
 			bacaData(&data, &nData)
 		case 2:
 			tambahData(&data, &nData)
+		case 3:
+			ubahData(&data, nData)
 		case 7:
 			cetakData(data, nData)
 		}
