@@ -24,6 +24,11 @@ func bacaData(A *tabPinjaman, n *int) {
 	}
 }
 
+func tambahData(A *tabPinjaman, n *int) {
+	fmt.Scan(&A[*n].nama, &A[*n].pinjaman, &A[*n].tenor)
+	*n++
+}
+
 func cetakData(A tabPinjaman, n int) {
 	var i int
 
@@ -55,6 +60,8 @@ func menu() {
 		switch pilih {
 		case 1:
 			bacaData(&data, &nData)
+		case 2:
+			tambahData(&data, &nData)
 		case 7:
 			cetakData(data, nData)
 		}
