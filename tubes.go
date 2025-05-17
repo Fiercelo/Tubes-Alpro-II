@@ -43,6 +43,7 @@ func menu() {
 	fmt.Println("2. Ubah Data Diri")
 	fmt.Println("3. Tambah Data Diri")
 	fmt.Println("4. Hapus Data Diri")
+	fmt.Println("5.                ")
 	fmt.Println("0. EXIT ")
 	fmt.Println("Pilih No -> ")
 }
