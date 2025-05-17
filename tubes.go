@@ -18,15 +18,36 @@ func main() {
 func bacaData(A *tabPinjaman, n *int) {
 	var i int
 
+	fmt.Print("Jumlah data yang ingin dimasukkan: ")
 	fmt.Scan(n)
 	for i = 0; i < *n; i++ {
-		fmt.Scan(&A[i].nama, &A[i].pinjaman, &A[i].tenor)
+		fmt.Printf("Data ke-%d:\n", i)
+		fmt.Print("Nama: ")
+		fmt.Scan(&A[i].nama)
+
+		fmt.Print("Pinjaman: ")
+		fmt.Scan(&A[i].pinjaman)
+
+		fmt.Print("Tenor(bulan): ")
+		fmt.Scan(&A[i].tenor)
+
 	}
 }
 
 func tambahData(A *tabPinjaman, n *int) {
-	fmt.Scan(&A[*n].nama, &A[*n].pinjaman, &A[*n].tenor)
-	*n++
+	fmt.Println("Tambahkan data yang ingin dimasukkan: ")
+
+	fmt.Print("Nama: ")
+	fmt.Scan(&A[*n].nama)
+
+	fmt.Print("Pinjaman: ")
+	fmt.Scan(&A[*n].pinjaman)
+
+	fmt.Print("Tenor(bulan): ")
+	fmt.Scan(&A[*n].tenor)
+	*n = *n + 1
+
+	fmt.Println("Data berhasil ditambahkan")
 }
 
 func cetakData(A tabPinjaman, n int) {
