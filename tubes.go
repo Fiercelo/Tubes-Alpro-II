@@ -47,3 +47,5 @@ func menu() {
 	fmt.Println("0. EXIT ")
 	fmt.Println("Pilih No -> ")
 }
+
+func print
