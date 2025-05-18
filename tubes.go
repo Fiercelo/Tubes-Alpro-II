@@ -125,8 +125,8 @@ func selectionSort(A *tabPinjaman, n int) {
 			}
 			i++
 		}
-		temp = A[pass - 1]
-		A[pass - 1] = A[idx]
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
 		A[idx] = temp
 		pass++
 	}
@@ -182,6 +182,8 @@ func menu() {
 			insertionSort(&data, nData)
 		case 8:
 			selectionSort(&data, nData)
+		case 9:
+			cetakData(data, nData)
 		}
 		if pilih == 0 {
 			break
