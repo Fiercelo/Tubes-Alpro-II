@@ -34,6 +34,14 @@ func bacaData(A *tabPinjaman, n *int) {
 	}
 }
 
+func cetakData(A tabPinjaman, n int) {
+	var i int
+
+	for i = 0; i < n; i++ {
+		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
+	}
+}
+
 func tambahData(A *tabPinjaman, n *int) {
 	fmt.Println("Tambahkan data yang ingin dimasukkan")
 
@@ -104,14 +112,41 @@ func hapusData(A *tabPinjaman, n *int) {
 	}
 }
 
-func cetakData(A tabPinjaman, n int) {
-	var i int
-
-	for i = 0; i < n; i++ {
-		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
+func selectionSort(A *tabPinjaman, n int) {
+	var pass, idx, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[i].pinjaman > A[idx].pinjaman {
+				idx = i
+			}
+			i++
+		}
+		temp = A[pass - 1]
+		A[pass - 1] = A[idx]
+		A[idx] = temp
+		pass++
 	}
 }
 
+func insertionSort(A *tabPinjaman, n int) {
+	var pass, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp.pinjaman < A[i-1].pinjaman {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+	}
+}
 func menu() {
 	var data tabPinjaman
 	var nData, pilih int
@@ -126,8 +161,9 @@ func menu() {
 		fmt.Println("4. Hapus Data                           ")
 		fmt.Println("5. Hitung Data                          ")
 		fmt.Println("6. Cari Data                            ")
-		fmt.Println("7. Mengurutkan Data                     ")
-		fmt.Println("8. Tampilkan Laporan                    ")
+		fmt.Println("7. Mengurutkan Data Secara Menaik       ")
+		fmt.Println("8. Mengurutkan Data Secara Menurun      ")
+		fmt.Println("9. Tampilkan Laporan                    ")
 		fmt.Println("0. EXIT                                 ")
 		fmt.Print("Pilih No -> ")
 
@@ -143,7 +179,9 @@ func menu() {
 		case 4:
 			hapusData(&data, &nData)
 		case 7:
-			cetakData(data, nData)
+			insertionSort(&data, nData)
+		case 8:
+			selectionSort(&data, nData)
 		}
 		if pilih == 0 {
 			break
