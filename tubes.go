@@ -21,16 +21,16 @@ func bacaData(A *tabPinjaman, n *int) {
 	fmt.Print("Jumlah data yang ingin dimasukkan: ")
 	fmt.Scan(n)
 	for i = 0; i < *n; i++ {
-		fmt.Printf("\nData ke-%d\n", i+1)
-		fmt.Print("Nama: ")
+		fmt.Println("=========================")
+		fmt.Printf("Data peminjam ke-%d\n", i+1)
+		fmt.Print("Nama peminjam: ")
 		fmt.Scan(&A[i].nama)
 
-		fmt.Print("Pinjaman: ")
+		fmt.Print("Jumlah pinjaman: ")
 		fmt.Scan(&A[i].pinjaman)
 
-		fmt.Print("Tenor(bulan): ")
+		fmt.Print("Tenor (bulan): ")
 		fmt.Scan(&A[i].tenor)
-
 	}
 }
 
@@ -68,11 +68,38 @@ func ubahData(A *tabPinjaman, n int) {
 			fmt.Print("Pinjaman: ")
 			fmt.Scan(&A[i].pinjaman)
 
-			fmt.Print("Tenor(bulan): ")
+			fmt.Print("Tenor (bulan): ")
 			fmt.Scan(&A[i].tenor)
+
+			found = true
 		}
 	}
-	if found != true {
+	if found == false {
+		fmt.Println("Data tidak ditemukan")
+	}
+
+	fmt.Println("Data berhasil diubah")
+}
+
+func hapusData(A *tabPinjaman, n *int) {
+	var i, j int
+	var nama string
+	var found bool = false
+
+	fmt.Print("Masukkan nama yang ingin dihapus: ")
+	fmt.Scan(&nama)
+
+	for i = 0; i < *n && found == false; i++ {
+		if A[i].nama == nama {
+			for j = i; j < *n-1; j++ {
+				A[j] = A[j+1]
+			}
+			fmt.Println("Data berhasil dihapus")
+			found = true
+			*n = *n - 1
+		}
+	}
+	if found == false {
 		fmt.Println("Data tidak ditemukan")
 	}
 }
@@ -97,9 +124,10 @@ func menu() {
 		fmt.Println("2. Tambah Data                          ")
 		fmt.Println("3. Ubah Data                            ")
 		fmt.Println("4. Hapus Data                           ")
-		fmt.Println("5. Cari Data                            ")
-		fmt.Println("6. Mengurutkan Data                     ")
-		fmt.Println("7. Tampilkan Laporan                    ")
+		fmt.Println("5. Hitung Data                          ")
+		fmt.Println("6. Cari Data                            ")
+		fmt.Println("7. Mengurutkan Data                     ")
+		fmt.Println("8. Tampilkan Laporan                    ")
 		fmt.Println("0. EXIT                                 ")
 		fmt.Print("Pilih No -> ")
 
@@ -112,6 +140,8 @@ func menu() {
 			tambahData(&data, &nData)
 		case 3:
 			ubahData(&data, nData)
+		case 4:
+			hapusData(&data, &nData)
 		case 7:
 			cetakData(data, nData)
 		}
