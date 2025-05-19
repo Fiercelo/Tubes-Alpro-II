@@ -5,9 +5,12 @@ import "fmt"
 const NMAX int = 100
 
 type pinjaman struct {
-	nama     string
-	pinjaman int
-	tenor    int
+	id         int
+	nama       string
+	pinjaman   int
+	tenor      int
+	bunga      int
+	jenisBunga string
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -15,59 +18,48 @@ func main() {
 	menu()
 }
 
-func bacaData(A *tabPinjaman, n *int) {
-	var i int
+func tambahData(A *tabPinjaman, n *int) {
+	var i, jumlah int
 
 	fmt.Print("Jumlah data yang ingin dimasukkan: ")
-	fmt.Scan(n)
-	for i = 0; i < *n; i++ {
-		fmt.Println("=========================")
-		fmt.Printf("Data peminjam ke-%d\n", i+1)
-		fmt.Print("Nama peminjam: ")
-		fmt.Scan(&A[i].nama)
+	fmt.Scan(&jumlah)
+	for i = 0; i < jumlah; i++ {
+		fmt.Println("====================================")
+		fmt.Printf("Tambahkan data peminjam ke-%d\n", *n+1)
 
-		fmt.Print("Jumlah pinjaman: ")
-		fmt.Scan(&A[i].pinjaman)
+		fmt.Print("ID: ")
+		fmt.Scan(&A[*n].id)
+
+		fmt.Print("Nama peminjam: ")
+		fmt.Scan(&A[*n].nama)
+
+		fmt.Print("Jumlah pinjaman (Rp): ")
+		fmt.Scan(&A[*n].pinjaman)
 
 		fmt.Print("Tenor (bulan): ")
-		fmt.Scan(&A[i].tenor)
+		fmt.Scan(&A[*n].tenor)
+
+		fmt.Print("Suku bunga (%): ")
+		fmt.Scan(&A[*n].bunga)
+
+		fmt.Print("Jenis bunga (Tetap/Variabel): ")
+		fmt.Scan(&A[*n].jenisBunga)
+
+		*n = *n + 1
 	}
-}
-
-func cetakData(A tabPinjaman, n int) {
-	var i int
-
-	for i = 0; i < n; i++ {
-		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
-	}
-}
-
-func tambahData(A *tabPinjaman, n *int) {
-	fmt.Println("Tambahkan data yang ingin dimasukkan")
-
-	fmt.Print("Nama: ")
-	fmt.Scan(&A[*n].nama)
-
-	fmt.Print("Pinjaman: ")
-	fmt.Scan(&A[*n].pinjaman)
-
-	fmt.Print("Tenor(bulan): ")
-	fmt.Scan(&A[*n].tenor)
-	*n = *n + 1
-
 	fmt.Println("Data berhasil ditambahkan")
 }
 
 func ubahData(A *tabPinjaman, n int) {
 	var i int
-	var nama string
+	var id int
 	var found bool = false
 
-	fmt.Print("Masukkan nama yang ingin diubah: ")
-	fmt.Scan(&nama)
+	fmt.Print("Masukkan id yang ingin diubah: ")
+	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
-		if A[i].nama == nama {
+		if A[i].id == id {
 			fmt.Println("Ganti data yang ingin diubah")
 
 			fmt.Print("Nama: ")
@@ -79,36 +71,42 @@ func ubahData(A *tabPinjaman, n int) {
 			fmt.Print("Tenor (bulan): ")
 			fmt.Scan(&A[i].tenor)
 
+			fmt.Print("Suku bunga (%): ")
+			fmt.Scan(&A[i].bunga)
+
+			fmt.Print("Jenis bunga (Tetap/Variabel): ")
+			fmt.Scan(&A[i].jenisBunga)
+
 			found = true
 		}
 	}
 	if found == false {
 		fmt.Println("Data tidak ditemukan")
+	} else {
+		fmt.Println("Data berhasil diubah")
 	}
-
-	fmt.Println("Data berhasil diubah")
 }
 
 func hapusData(A *tabPinjaman, n *int) {
-	var i, j int
-	var nama string
+	var i, j, id int
 	var found bool = false
 
-	fmt.Print("Masukkan nama yang ingin dihapus: ")
-	fmt.Scan(&nama)
+	fmt.Print("Masukkan ID yang ingin dihapus: ")
+	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
-		if A[i].nama == nama {
+		if A[i].id == id {
 			for j = i; j < *n-1; j++ {
 				A[j] = A[j+1]
 			}
-			fmt.Println("Data berhasil dihapus")
 			found = true
 			*n = *n - 1
 		}
 	}
 	if found == false {
 		fmt.Println("Data tidak ditemukan")
+	} else {
+		fmt.Println("Data berhasil dihapus")
 	}
 }
 
@@ -147,6 +145,15 @@ func insertionSort(A *tabPinjaman, n int) {
 		pass++
 	}
 }
+
+func cetakData(A tabPinjaman, n int) {
+	var i int
+
+	for i = 0; i < n; i++ {
+		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
+	}
+}
+
 func menu() {
 	var data tabPinjaman
 	var nData, pilih int
@@ -155,34 +162,31 @@ func menu() {
 		fmt.Println("========================================")
 		fmt.Println("||          PINJAMAN ONLINE           ||")
 		fmt.Println("========================================")
-		fmt.Println("1. Masukkan Data                        ")
-		fmt.Println("2. Tambah Data                          ")
-		fmt.Println("3. Ubah Data                            ")
-		fmt.Println("4. Hapus Data                           ")
-		fmt.Println("5. Hitung Data                          ")
-		fmt.Println("6. Cari Data                            ")
-		fmt.Println("7. Mengurutkan Data Secara Menaik       ")
-		fmt.Println("8. Mengurutkan Data Secara Menurun      ")
-		fmt.Println("9. Tampilkan Laporan                    ")
+		fmt.Println("1. Tambah Data                          ")
+		fmt.Println("2. Ubah Data                            ")
+		fmt.Println("3. Hapus Data                           ")
+		fmt.Println("4. Hitung Data                          ")
+		fmt.Println("5. Cari Data                            ")
+		fmt.Println("6. Mengurutkan Data Secara Menaik       ")
+		fmt.Println("7. Mengurutkan Data Secara Menurun      ")
+		fmt.Println("8. Tampilkan Laporan                    ")
 		fmt.Println("0. EXIT                                 ")
-		fmt.Print("Pilih No -> ")
+		fmt.Print("Pilih No ➝  ")
 
 		fmt.Scan(&pilih)
 
 		switch pilih {
 		case 1:
-			bacaData(&data, &nData)
-		case 2:
 			tambahData(&data, &nData)
-		case 3:
+		case 2:
 			ubahData(&data, nData)
-		case 4:
+		case 3:
 			hapusData(&data, &nData)
-		case 7:
+		case 6:
 			insertionSort(&data, nData)
-		case 8:
+		case 7:
 			selectionSort(&data, nData)
-		case 9:
+		case 8:
 			cetakData(data, nData)
 		}
 		if pilih == 0 {
