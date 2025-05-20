@@ -2,14 +2,16 @@ package main
 
 import "fmt"
 
-const NMAX int = 100
+const NMAX int = 10
 
 type pinjaman struct {
 	id       string
 	nama     string
 	pinjaman int
 	tenor    int
-	bunga    int
+	bunga    float64
+	tBunga float64
+	kredit float64
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -25,6 +27,9 @@ func tambahData(A *tabPinjaman, n *int) {
 
 	fmt.Print("Jumlah data yang ingin dimasukkan: ")
 	fmt.Scan(&jumlah)
+	if jumlah > NMAX {
+		jumlah = NMAX
+	}
 	for i = 0; i < jumlah; i++ {
 		fmt.Println("====================================")
 		fmt.Printf("Tambahkan data peminjam ke-%d\n", *n+1)
@@ -224,17 +229,47 @@ func cetakData(A tabPinjaman, n int) {
 	}
 }
 
+func nilaiMax(A tabPinjaman, n int)int {
+	var i, idxMAx int
+	for i = 0; i < n; i++ {
+		if A[i].pinjaman > A[idxMax].pinjaman {
+			idxMax = i
+		}
+	}
+	return idxMax
+}
+
+func nilaiMin(A tabPinjaman, n int)int {
+	var i, idxMin int
+	for i = 0; i < n; i++ {
+		if A[i].pinjaman < A[idxMin].pinjaman {
+			idxMin = i
+		}
+	}
+	return idxMin
+}
+
+
+func hitungBunga(A *tabPinjaman, n int) {
+	var i int
+	for i = 0; i < n; i++ {
+		A[i].bunga = (A[i].bunga + 100) / 100
+		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
+		A[i].kredit = A[i].tBunga / float64(A[i].tenor)
+	}
+}
+
 func menu() {
 	var pilih int
 
 	for {
 		fmt.Println("========================================")
-		fmt.Println("||          PINJAMAN ONLINE           ||")
+		fmt.Println("||           PINJAMAN BANK            ||")
 		fmt.Println("========================================")
-		fmt.Println("1. Tambah Data                          ")
-		fmt.Println("2. Ubah Data                            ")
-		fmt.Println("3. Hapus Data                           ")
-		fmt.Println("4. Hitung Data                          ")
+		fmt.Println("1. Menambahkan Data Peminjam            ")
+		fmt.Println("2. Mengubah Data Peminjam               ")
+		fmt.Println("3. Menghapus Data Peminjam              ")
+		fmt.Println("4. Menghitung Data                      ")
 		fmt.Println("5. Cari Data                            ")
 		fmt.Println("6. Mengurutkan Daftar Peminjam          ")
 		fmt.Println("8. Tampilkan Laporan                    ")
