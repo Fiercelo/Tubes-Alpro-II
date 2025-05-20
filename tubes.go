@@ -5,12 +5,11 @@ import "fmt"
 const NMAX int = 100
 
 type pinjaman struct {
-	id         int
-	nama       string
-	pinjaman   int
-	tenor      int
-	bunga      int
-	jenisBunga string
+	id       string
+	nama     string
+	pinjaman int
+	tenor    int
+	bunga    int
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -39,12 +38,6 @@ func tambahData(A *tabPinjaman, n *int) {
 		fmt.Print("Tenor (bulan): ")
 		fmt.Scan(&A[*n].tenor)
 
-		fmt.Print("Suku bunga (%): ")
-		fmt.Scan(&A[*n].bunga)
-
-		fmt.Print("Jenis bunga (Tetap/Variabel): ")
-		fmt.Scan(&A[*n].jenisBunga)
-
 		*n = *n + 1
 	}
 	fmt.Println("Data berhasil ditambahkan")
@@ -52,10 +45,10 @@ func tambahData(A *tabPinjaman, n *int) {
 
 func ubahData(A *tabPinjaman, n int) {
 	var i int
-	var id int
+	var id string
 	var found bool = false
 
-	fmt.Print("Masukkan id yang ingin diubah: ")
+	fmt.Print("Masukkan ID yang ingin diubah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -71,24 +64,19 @@ func ubahData(A *tabPinjaman, n int) {
 			fmt.Print("Tenor (bulan): ")
 			fmt.Scan(&A[i].tenor)
 
-			fmt.Print("Suku bunga (%): ")
-			fmt.Scan(&A[i].bunga)
-
-			fmt.Print("Jenis bunga (Tetap/Variabel): ")
-			fmt.Scan(&A[i].jenisBunga)
-
 			found = true
 		}
 	}
 	if found == false {
-		fmt.Println("Data tidak ditemukan")
+		fmt.Println("ID tidak ditemukan")
 	} else {
 		fmt.Println("Data berhasil diubah")
 	}
 }
 
 func hapusData(A *tabPinjaman, n *int) {
-	var i, j, id int
+	var i, j int
+	var id string
 	var found bool = false
 
 	fmt.Print("Masukkan ID yang ingin dihapus: ")
@@ -104,9 +92,31 @@ func hapusData(A *tabPinjaman, n *int) {
 		}
 	}
 	if found == false {
-		fmt.Println("Data tidak ditemukan")
+		fmt.Println("ID tidak ditemukan")
 	} else {
 		fmt.Println("Data berhasil dihapus")
+	}
+}
+
+func cariData(A *tabPinjaman, n int) {
+	var i int
+	var id string
+	var found bool = false
+
+	fmt.Print("Masukkan ID yang ingin dicari: ")
+	fmt.Scan(&id)
+
+	for i = 0; i < n && found == false; i++ {
+		if A[i].id == id {
+			found = true
+			fmt.Println("ID:", A[i].id)
+			fmt.Println("Nama:", A[i].nama)
+			fmt.Println("Pinjaman:", A[i].pinjaman)
+			fmt.Println("Tenor:", A[i].tenor)
+		}
+	}
+	if found == false {
+		fmt.Println("ID tidak ditemukan")
 	}
 }
 
@@ -182,6 +192,8 @@ func menu() {
 			ubahData(&data, nData)
 		case 3:
 			hapusData(&data, &nData)
+		case 5:
+			cariData(&data, nData)
 		case 6:
 			insertionSort(&data, nData)
 		case 7:
