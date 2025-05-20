@@ -13,6 +13,9 @@ type pinjaman struct {
 }
 type tabPinjaman [NMAX]pinjaman
 
+var data tabPinjaman
+var nData int
+
 func main() {
 	menu()
 }
@@ -120,6 +123,21 @@ func cariData(A *tabPinjaman, n int) {
 	}
 }
 
+func pilihSort() {
+	var pilih int
+
+	fmt.Println("Pilih metode pengurutan")
+	fmt.Println("1. Data terurut menaik")
+	fmt.Println("2. Data terurut menurun")
+	fmt.Scan(&pilih)
+
+	if pilih == 1 {
+		insertionSort(&data, nData)
+	} else if pilih == 2 {
+		selectionSort(&data, nData)
+	}
+}
+
 func selectionSort(A *tabPinjaman, n int) {
 	var pass, idx, i int
 	var temp pinjaman
@@ -165,8 +183,7 @@ func cetakData(A tabPinjaman, n int) {
 }
 
 func menu() {
-	var data tabPinjaman
-	var nData, pilih int
+	var pilih int
 
 	for {
 		fmt.Println("========================================")
@@ -177,8 +194,7 @@ func menu() {
 		fmt.Println("3. Hapus Data                           ")
 		fmt.Println("4. Hitung Data                          ")
 		fmt.Println("5. Cari Data                            ")
-		fmt.Println("6. Mengurutkan Data Secara Menaik       ")
-		fmt.Println("7. Mengurutkan Data Secara Menurun      ")
+		fmt.Println("6. Mengurutkan Daftar Peminjam          ")
 		fmt.Println("8. Tampilkan Laporan                    ")
 		fmt.Println("0. EXIT                                 ")
 		fmt.Print("Pilih No ➝  ")
@@ -195,9 +211,7 @@ func menu() {
 		case 5:
 			cariData(&data, nData)
 		case 6:
-			insertionSort(&data, nData)
-		case 7:
-			selectionSort(&data, nData)
+			pilihSort()
 		case 8:
 			cetakData(data, nData)
 		}
