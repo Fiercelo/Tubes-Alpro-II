@@ -127,18 +127,24 @@ func pilihSort() {
 	var pilih int
 
 	fmt.Println("Pilih metode pengurutan")
-	fmt.Println("1. Data terurut menaik")
-	fmt.Println("2. Data terurut menurun")
+	fmt.Println("1. Data terurut menaik berdasarkan pinjaman")
+	fmt.Println("2. Data terurut menaik berdasarkan tenor")
+	fmt.Println("3. Data terurut menurun berdasarkan pinjaman")
+	fmt.Println("4. Data terurut menurun berdasarkan tenor")
 	fmt.Scan(&pilih)
 
 	if pilih == 1 {
-		insertionSort(&data, nData)
+		insertionSortPinjaman(&data, nData)
 	} else if pilih == 2 {
-		selectionSort(&data, nData)
+		insertionSortTenor(&data, nData)
+	} else if pilih == 3 {
+		selectionSortPinjaman(&data, nData)
+	} else if pilih == 4 {
+		selectionSortTenor(&data, nData)
 	}
 }
 
-func selectionSort(A *tabPinjaman, n int) {
+func selectionSortPinjaman(A *tabPinjaman, n int) {
 	var pass, idx, i int
 	var temp pinjaman
 	pass = 1
@@ -158,7 +164,27 @@ func selectionSort(A *tabPinjaman, n int) {
 	}
 }
 
-func insertionSort(A *tabPinjaman, n int) {
+func selectionSortTenor(A *tabPinjaman, n int) {
+	var pass, idx, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[i].tenor > A[idx].tenor {
+				idx = i
+			}
+			i++
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+		pass++
+	}
+}
+
+func insertionSortPinjaman(A *tabPinjaman, n int) {
 	var pass, i int
 	var temp pinjaman
 	pass = 1
@@ -166,6 +192,22 @@ func insertionSort(A *tabPinjaman, n int) {
 		i = pass
 		temp = A[pass]
 		for i > 0 && temp.pinjaman < A[i-1].pinjaman {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+	}
+}
+
+func insertionSortTenor(A *tabPinjaman, n int) {
+	var pass, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp.tenor < A[i-1].tenor {
 			A[i] = A[i-1]
 			i--
 		}
