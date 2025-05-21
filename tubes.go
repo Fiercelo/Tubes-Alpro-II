@@ -10,8 +10,8 @@ type pinjaman struct {
 	pinjaman int
 	tenor    int
 	bunga    float64
-	tBunga float64
-	kredit float64
+	tBunga   float64
+	kredit   float64
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -20,6 +20,23 @@ var nData int
 
 func main() {
 	menu()
+}
+
+func plihUbahHapusData() {
+	var pilih int
+
+	fmt.Println("Pilih ubah data atau hapus data")
+	fmt.Println("1. Mengubah data peminjam")
+	fmt.Println("2. Menghapus data peminjam")
+	fmt.Println("0. BACK")
+	fmt.Print("Pilih No ➝ ")
+	fmt.Scan(&pilih)
+
+	if pilih == 1 {
+		ubahData(&data, nData)
+	} else if pilih == 2 {
+		hapusData(&data, &nData)
+	}
 }
 
 func tambahData(A *tabPinjaman, n *int) {
@@ -56,6 +73,7 @@ func ubahData(A *tabPinjaman, n int) {
 	var id string
 	var found bool = false
 
+	cetakData(data, nData)
 	fmt.Print("Masukkan ID yang ingin diubah: ")
 	fmt.Scan(&id)
 
@@ -87,6 +105,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var id string
 	var found bool = false
 
+	cetakData(data, nData)
 	fmt.Print("Masukkan ID yang ingin dihapus: ")
 	fmt.Scan(&id)
 
@@ -225,12 +244,12 @@ func cetakData(A tabPinjaman, n int) {
 	var i int
 
 	for i = 0; i < n; i++ {
-		fmt.Printf("%s %d %d \n", A[i].nama, A[i].pinjaman, A[i].tenor)
+		fmt.Printf("%s %s %d %d \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
 	}
 }
 
-func nilaiMax(A tabPinjaman, n int)int {
-	var i, idxMAx int
+func nilaiMax(A tabPinjaman, n int) int {
+	var i, idxMax int
 	for i = 0; i < n; i++ {
 		if A[i].pinjaman > A[idxMax].pinjaman {
 			idxMax = i
@@ -239,7 +258,7 @@ func nilaiMax(A tabPinjaman, n int)int {
 	return idxMax
 }
 
-func nilaiMin(A tabPinjaman, n int)int {
+func nilaiMin(A tabPinjaman, n int) int {
 	var i, idxMin int
 	for i = 0; i < n; i++ {
 		if A[i].pinjaman < A[idxMin].pinjaman {
@@ -248,7 +267,6 @@ func nilaiMin(A tabPinjaman, n int)int {
 	}
 	return idxMin
 }
-
 
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
@@ -267,11 +285,10 @@ func menu() {
 		fmt.Println("||           PINJAMAN BANK            ||")
 		fmt.Println("========================================")
 		fmt.Println("1. Menambahkan Data Peminjam            ")
-		fmt.Println("2. Mengubah Data Peminjam               ")
-		fmt.Println("3. Menghapus Data Peminjam              ")
-		fmt.Println("4. Menghitung Data                      ")
-		fmt.Println("5. Cari Data                            ")
-		fmt.Println("6. Mengurutkan Daftar Peminjam          ")
+		fmt.Println("2. Mengubah atau Menghapus Data Peminjam")
+		fmt.Println("3. Menghitung Data                      ")
+		fmt.Println("4. Cari Data                            ")
+		fmt.Println("5. Mengurutkan Daftar Peminjam          ")
 		fmt.Println("8. Tampilkan Laporan                    ")
 		fmt.Println("0. EXIT                                 ")
 		fmt.Print("Pilih No ➝  ")
@@ -282,12 +299,16 @@ func menu() {
 		case 1:
 			tambahData(&data, &nData)
 		case 2:
-			ubahData(&data, nData)
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				plihUbahHapusData()
+			}
 		case 3:
-			hapusData(&data, &nData)
-		case 5:
+			hitungBunga(&data, nData)
+		case 4:
 			cariData(&data, nData)
-		case 6:
+		case 5:
 			pilihSort()
 		case 8:
 			cetakData(data, nData)
