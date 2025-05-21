@@ -125,6 +125,27 @@ func hapusData(A *tabPinjaman, n *int) {
 	}
 }
 
+func pilihCari() {
+	var pilih int
+
+	fmt.Println("Pilih pencarian")
+	fmt.Println("1. Cari ID peminjam")
+	fmt.Println("2. Cari pinjaman terendah")
+	fmt.Println("3. Cari pinjaman tertinggi")
+	fmt.Println("0. BACK")
+	fmt.Print("Pilih No ➝  ")
+	fmt.Scan(&pilih)
+
+	if pilih == 1 {
+		cariData(&data, nData)
+	} else if pilih == 2 {
+		nilaiMin(data, nData)
+	} else if pilih == 3 {
+		nilaiMax(data, nData)
+	}
+
+}
+
 func cariData(A *tabPinjaman, n int) {
 	var i int
 	var id string
@@ -248,28 +269,37 @@ func cetakData(A tabPinjaman, n int) {
 	}
 }
 
-func nilaiMax(A tabPinjaman, n int) int {
+func nilaiMax(A tabPinjaman, n int) {
 	var i, idxMax int
 	for i = 0; i < n; i++ {
 		if A[i].pinjaman > A[idxMax].pinjaman {
 			idxMax = i
 		}
 	}
-	return idxMax
+	fmt.Println("Data dengan pinjaman terendah:")
+	fmt.Println("ID:", A[idxMax].id)
+	fmt.Println("Nama:", A[idxMax].nama)
+	fmt.Println("Pinjaman:", A[idxMax].pinjaman)
+	fmt.Println("Tenor:", A[idxMax].tenor)
 }
 
-func nilaiMin(A tabPinjaman, n int) int {
+func nilaiMin(A tabPinjaman, n int) {
 	var i, idxMin int
 	for i = 0; i < n; i++ {
 		if A[i].pinjaman < A[idxMin].pinjaman {
 			idxMin = i
 		}
 	}
-	return idxMin
+	fmt.Println("Data dengan pinjaman tertinggi:")
+	fmt.Println("ID:", A[idxMin].id)
+	fmt.Println("Nama:", A[idxMin].nama)
+	fmt.Println("Pinjaman:", A[idxMin].pinjaman)
+	fmt.Println("Tenor:", A[idxMin].tenor)
 }
 
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
+
 	for i = 0; i < n; i++ {
 		A[i].bunga = (A[i].bunga + 100) / 100
 		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
@@ -305,11 +335,23 @@ func menu() {
 				plihUbahHapusData()
 			}
 		case 3:
-			hitungBunga(&data, nData)
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				hitungBunga(&data, nData)
+			}
 		case 4:
-			cariData(&data, nData)
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				pilihCari()
+			}
 		case 5:
-			pilihSort()
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				pilihSort()
+			}
 		case 8:
 			cetakData(data, nData)
 		}
