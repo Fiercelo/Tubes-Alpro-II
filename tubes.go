@@ -22,37 +22,84 @@ func main() {
 	menu()
 }
 
-func plihUbahHapusData() {
+func menu() {
 	var pilih int
 
-	fmt.Println("Pilih ubah data atau hapus data")
-	fmt.Println("1. Mengubah data peminjam")
-	fmt.Println("2. Menghapus data peminjam")
-	fmt.Println("0. BACK")
-	fmt.Print("Pilih No ➝ ")
-	fmt.Scan(&pilih)
+	for {
+		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
+		fmt.Println("┃               PINJAMAN BANK              ┃")
+		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
+		fmt.Println("┃1. Menambahkan Data Peminjam              ┃")
+		fmt.Println("┃2. Mengubah atau Menghapus Data Peminjam  ┃")
+		fmt.Println("┃3. Mengurutkan Daftar Peminjam            ┃")
+		fmt.Println("┃4. Menghitung Data                        ┃")
+		fmt.Println("┃5. Cari Data                              ┃")
+		fmt.Println("┃6. Tampilkan Laporan                      ┃")
+		fmt.Println("┃0. EXIT                                   ┃")
+		fmt.Print(" Pilih No ➝ ")
 
-	if pilih == 1 {
-		ubahData(&data, nData)
-	} else if pilih == 2 {
-		hapusData(&data, &nData)
+		fmt.Scan(&pilih)
+		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
+
+		switch pilih {
+		case 1:
+			tambahData(&data, &nData)
+		case 2:
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				plihUbahHapusData()
+			}
+		case 3:
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				pilihSort()
+			}
+		case 4:
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				hitungBunga(&data, nData)
+			}
+		case 5:
+			if nData == 0 {
+				fmt.Println("Masukkan data peminjam terlebih dahulu")
+			} else {
+				pilihCari()
+			}
+		case 6:
+			cetakData(data, nData)
+		}
+		if pilih == 0 {
+			break
+		}
 	}
 }
 
 func tambahData(A *tabPinjaman, n *int) {
 	var i, jumlah int
-
+	var idP string
 	fmt.Print("Jumlah data yang ingin dimasukkan: ")
 	fmt.Scan(&jumlah)
+
 	if jumlah > NMAX {
 		jumlah = NMAX
 	}
+
 	for i = 0; i < jumlah; i++ {
-		fmt.Println("====================================")
 		fmt.Printf("Tambahkan data peminjam ke-%d\n", *n+1)
 
-		fmt.Print("ID: ")
-		fmt.Scan(&A[*n].id)
+		for {
+			fmt.Print("ID: ")
+			fmt.Scan(&idP)
+			if !IDSama(*A, *n, idP) {
+				A[*n].id = idP
+				break
+			} else {
+				fmt.Println("ID sudah digunakan, Masukkan ID lain.")
+			}
+		}
 
 		fmt.Print("Nama peminjam: ")
 		fmt.Scan(&A[*n].nama)
@@ -63,9 +110,36 @@ func tambahData(A *tabPinjaman, n *int) {
 		fmt.Print("Tenor (bulan): ")
 		fmt.Scan(&A[*n].tenor)
 
-		*n = *n + 1
+		*n++
 	}
 	fmt.Println("Data berhasil ditambahkan")
+}
+
+func IDSama(A tabPinjaman, n int, idP string) bool {
+	var i int
+	for i = 0; i < n; i++ {
+		if A[i].id == idP {
+			return true
+		}
+	}
+	return false
+}
+
+func plihUbahHapusData() {
+	var pilih int
+
+	fmt.Println("Pilih ubah data atau hapus data             ")
+	fmt.Println("1. Mengubah data peminjam                   ")
+	fmt.Println("2. Menghapus data peminjam                  ")
+	fmt.Println("0. BACK                                     ")
+	fmt.Print("Pilih No ➝ ")
+	fmt.Scan(&pilih)
+
+	if pilih == 1 {
+		ubahData(&data, nData)
+	} else if pilih == 2 {
+		hapusData(&data, &nData)
+	}
 }
 
 func ubahData(A *tabPinjaman, n int) {
@@ -74,7 +148,7 @@ func ubahData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin diubah: ")
+	fmt.Print("Masukkan ID yang ingin diubah:                ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -106,7 +180,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dihapus: ")
+	fmt.Print("Masukkan ID yang ingin dihapus:               ")
 	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
@@ -128,11 +202,11 @@ func hapusData(A *tabPinjaman, n *int) {
 func pilihCari() {
 	var pilih int
 
-	fmt.Println("Pilih pencarian")
-	fmt.Println("1. Cari ID peminjam")
-	fmt.Println("2. Cari pinjaman terendah")
-	fmt.Println("3. Cari pinjaman tertinggi")
-	fmt.Println("0. BACK")
+	fmt.Println("Pilih pencarian                             ")
+	fmt.Println("1. Cari ID peminjam                         ")
+	fmt.Println("2. Cari pinjaman terendah                   ")
+	fmt.Println("3. Cari pinjaman tertinggi                  ")
+	fmt.Println("0. BACK                                     ")
 	fmt.Print("Pilih No ➝  ")
 	fmt.Scan(&pilih)
 
@@ -152,7 +226,7 @@ func cariData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dicari: ")
+	fmt.Print("Masukkan ID yang ingin dicari:                ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -174,11 +248,11 @@ func cariData(A *tabPinjaman, n int) {
 func pilihSort() {
 	var pilih int
 
-	fmt.Println("Pilih metode pengurutan")
-	fmt.Println("1. Data terurut menaik berdasarkan pinjaman")
-	fmt.Println("2. Data terurut menaik berdasarkan tenor")
+	fmt.Println("Pilih metode pengurutan                     ")
+	fmt.Println("1. Data terurut menaik berdasarkan pinjaman ")
+	fmt.Println("2. Data terurut menaik berdasarkan tenor    ")
 	fmt.Println("3. Data terurut menurun berdasarkan pinjaman")
-	fmt.Println("4. Data terurut menurun berdasarkan tenor")
+	fmt.Println("4. Data terurut menurun berdasarkan tenor   ")
 	fmt.Print("Pilih No ➝  ")
 	fmt.Scan(&pilih)
 
@@ -324,59 +398,5 @@ func hitungBunga(A *tabPinjaman, n int) {
 	}
 	for i = 0; i < n; i++ {
 		fmt.Printf("%s %s %d %d %.2f %.2f \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
-	}
-}
-
-func menu() {
-	var pilih int
-
-	for {
-		fmt.Println("========================================")
-		fmt.Println("||           PINJAMAN BANK            ||")
-		fmt.Println("========================================")
-		fmt.Println("1. Menambahkan Data Peminjam            ")
-		fmt.Println("2. Mengubah atau Menghapus Data Peminjam")
-		fmt.Println("3. Mengurutkan Daftar Peminjam          ")
-		fmt.Println("4. Menghitung Data                      ")
-		fmt.Println("5. Cari Data                            ")
-		fmt.Println("6. Tampilkan Laporan                    ")
-		fmt.Println("0. EXIT                                 ")
-		fmt.Print("Pilih No ➝  ")
-
-		fmt.Scan(&pilih)
-
-		switch pilih {
-		case 1:
-			tambahData(&data, &nData)
-		case 2:
-			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
-			} else {
-				plihUbahHapusData()
-			}
-		case 3:
-			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
-			} else {
-				pilihSort()
-			}
-		case 4:
-			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
-			} else {
-				hitungBunga(&data, nData)
-			}
-		case 5:
-			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
-			} else {
-				pilihCari()
-			}
-		case 6:
-			cetakData(data, nData)
-		}
-		if pilih == 0 {
-			break
-		}
 	}
 }
