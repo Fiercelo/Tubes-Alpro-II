@@ -36,7 +36,7 @@ func menu() {
 		fmt.Println("┃5. Cari Data                              ┃")
 		fmt.Println("┃6. Tampilkan Laporan                      ┃")
 		fmt.Println("┃0. EXIT                                   ┃")
-		fmt.Print(" Pilih No ➝ ")
+		fmt.Print(" Pilih No ➝  ")
 
 		fmt.Scan(&pilih)
 		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
@@ -48,7 +48,7 @@ func menu() {
 			if nData == 0 {
 				fmt.Println("Masukkan data peminjam terlebih dahulu")
 			} else {
-				plihUbahHapusData()
+				pilihUbahHapusData()
 			}
 		case 3:
 			if nData == 0 {
@@ -125,7 +125,7 @@ func IDSama(A tabPinjaman, n int, idP string) bool {
 	return false
 }
 
-func plihUbahHapusData() {
+func pilihUbahHapusData() {
 	var pilih int
 
 	fmt.Println("Pilih ubah data atau hapus data             ")
@@ -148,7 +148,7 @@ func ubahData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin diubah:                ")
+	fmt.Print("Masukkan ID yang ingin diubah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -180,7 +180,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dihapus:               ")
+	fmt.Print("Masukkan ID yang ingin dihapus: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
@@ -226,7 +226,7 @@ func cariData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dicari:                ")
+	fmt.Print("Masukkan ID yang ingin dicari: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -363,8 +363,8 @@ func nilaiMax(A tabPinjaman, n int) {
 	fmt.Println("Nama:", A[idxMax].nama)
 	fmt.Println("Pinjaman:", A[idxMax].pinjaman)
 	fmt.Println("Tenor:", A[idxMax].tenor)
-	fmt.Println("Total pembayaran:", A[idxMax].tBunga)
-	fmt.Println("Cicilan per bulan:", A[idxMax].kredit)
+	fmt.Printf("Total pembayaran: %.0f\n", A[idxMax].tBunga)
+	fmt.Printf("Cicilan per bulan: %.0f\n", A[idxMax].kredit)
 }
 
 func nilaiMin(A tabPinjaman, n int) {
@@ -379,15 +379,15 @@ func nilaiMin(A tabPinjaman, n int) {
 	fmt.Println("Nama:", A[idxMin].nama)
 	fmt.Println("Pinjaman:", A[idxMin].pinjaman)
 	fmt.Println("Tenor:", A[idxMin].tenor)
-	fmt.Println("Total pembayaran:", A[idxMin].tBunga)
-	fmt.Println("Cicilan per bulan:", A[idxMin].kredit)
+	fmt.Printf("Total pembayaran: %.0f\n", A[idxMin].tBunga)
+	fmt.Printf("Cicilan per bulan: %.0f\n", A[idxMin].kredit)
 }
 
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
 
 	for i = 0; i < n; i++ {
-		fmt.Printf("Masukkan suku bunga data ke-%d (%%): ", i+1)
+		fmt.Printf("Masukkan suku bunga untuk data ke-%d (%%): ", i+1)
 		fmt.Scan(&A[i].bunga)
 	}
 
