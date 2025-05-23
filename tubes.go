@@ -70,6 +70,8 @@ func menu() {
 			}
 		case 6:
 			cetakData(data, nData)
+		default:
+			fmt.Println("Pilihan tidak tersedia. Coba lagi.")
 		}
 		if pilih == 0 {
 			break
@@ -80,24 +82,30 @@ func menu() {
 func tambahData(A *tabPinjaman, n *int) {
 	var i, jumlah int
 	var idP string
-	fmt.Print("Jumlah data yang ingin dimasukkan: ")
+
+	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+	fmt.Println("           TAMBAH DATA PEMINJAM BARU           ")
+	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+	fmt.Print("Jumlah data yang ingin dimasukkan (max 10): ")
 	fmt.Scan(&jumlah)
 
 	if jumlah > NMAX {
 		jumlah = NMAX
+		fmt.Println("Kapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10.")
 	}
 
 	for i = 0; i < jumlah; i++ {
-		fmt.Printf("Tambahkan data peminjam ke-%d\n", *n+1)
+		fmt.Println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+		fmt.Printf("Data peminjam ke-%d\n", *n+1)
 
 		for {
-			fmt.Print("ID: ")
+			fmt.Print("Masukkan ID unik: ")
 			fmt.Scan(&idP)
 			if !IDSama(*A, *n, idP) {
 				A[*n].id = idP
 				break
 			} else {
-				fmt.Println("ID sudah digunakan, Masukkan ID lain.")
+				fmt.Println("ID sudah digunakan, Silakan masukkan ID lain.")
 			}
 		}
 
@@ -107,12 +115,12 @@ func tambahData(A *tabPinjaman, n *int) {
 		fmt.Print("Jumlah pinjaman (Rp): ")
 		fmt.Scan(&A[*n].pinjaman)
 
-		fmt.Print("Tenor (bulan): ")
+		fmt.Print("Tenor pinjaman (bulan): ")
 		fmt.Scan(&A[*n].tenor)
 
 		*n++
 	}
-	fmt.Println("Data berhasil ditambahkan")
+	fmt.Println("Data berhasil ditambahkan!")
 }
 
 func IDSama(A tabPinjaman, n int, idP string) bool {
@@ -393,10 +401,10 @@ func hitungBunga(A *tabPinjaman, n int) {
 
 	for i = 0; i < n; i++ {
 		A[i].bunga = (A[i].bunga + 100) / 100
-		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
+		A[i].tBunga = ((A[i].bunga + 100) / 100) * float64(A[i].pinjaman)
 		A[i].kredit = A[i].tBunga / float64(A[i].tenor)
 	}
 	for i = 0; i < n; i++ {
-		fmt.Printf("%s %s %d %d %.2f %.2f \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
+		fmt.Printf("%s %s %d %d %.0f %.0f \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
 	}
 }
