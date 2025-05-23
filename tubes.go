@@ -169,16 +169,20 @@ func IDSama(A tabPinjaman, n int, idP string) bool {
 func pilihUbahHapusData() {
 	var pilih int
 
-	fmt.Println("Pilih ubah data atau hapus data             ")
-	fmt.Println("1. Mengubah data peminjam                   ")
-	fmt.Println("2. Menghapus data peminjam                  ")
-	fmt.Println("0. BACK                                     ")
-	fmt.Print("Pilih No ➝ ")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃         UBAH / HAPUS DATA PEMINJAM        ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ [1] Ubah Data Peminjam                    ┃")
+	fmt.Println("┃ [2] Hapus Data Peminjam                   ┃")
+	fmt.Println("┃ [0] Kembali ke Menu Utama                 ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Print("Pilih No ➝  ")
 	fmt.Scan(&pilih)
 
-	if pilih == 1 {
+	switch pilih {
+	case 1:
 		ubahData(&data, nData)
-	} else if pilih == 2 {
+	case 2:
 		hapusData(&data, &nData)
 	}
 }
