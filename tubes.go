@@ -19,6 +19,14 @@ var data tabPinjaman
 var nData int
 
 func main() {
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃   Selamat datang di Aplikasi Pinjaman  ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃   Aplikasi ini mensimulasikan sistem   ┃")
+	fmt.Println("┃     pinjaman dan kredit sederhana      ┃")
+	fmt.Println("┃       Tekan ENTER untuk memulai        ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Scanln()
 	menu()
 }
 
@@ -26,52 +34,61 @@ func menu() {
 	var pilih int
 
 	for {
-		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
-		fmt.Println("┃               PINJAMAN BANK              ┃")
-		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
-		fmt.Println("┃1. Menambahkan Data Peminjam              ┃")
-		fmt.Println("┃2. Mengubah atau Menghapus Data Peminjam  ┃")
-		fmt.Println("┃3. Mengurutkan Daftar Peminjam            ┃")
-		fmt.Println("┃4. Menghitung Data                        ┃")
-		fmt.Println("┃5. Cari Data                              ┃")
-		fmt.Println("┃6. Tampilkan Laporan                      ┃")
-		fmt.Println("┃0. EXIT                                   ┃")
-		fmt.Print(" Pilih No ➝  ")
+		fmt.Println(" 𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃   ִֶָ 𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ")
+		fmt.Println("🌹            PINJAMAN BANK            🌹")
+		fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+		fmt.Println("┃ [1] Tambah Data Peminjam               ┃")
+		fmt.Println("┃ [2] Ubah / Hapus Data Peminjam         ┃")
+		fmt.Println("┃ [3] Urutkan Daftar Peminjam            ┃")
+		fmt.Println("┃ [4] Hitung Bunga & Cicilan             ┃")
+		fmt.Println("┃ [5] Cari Data Peminjam                 ┃")
+		fmt.Println("┃ [6] Tampilkan Laporan                  ┃")
+		fmt.Println("┃ [0] EXIT                               ┃")
+		fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+		fmt.Print("Pilih No ➝  ")
 
 		fmt.Scan(&pilih)
-		fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
+		fmt.Println()
 
 		switch pilih {
 		case 1:
 			tambahData(&data, &nData)
 		case 2:
 			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
+				fmt.Println("Belum ada data peminjam. Silakan tambahkan terlebih dahulu.")
 			} else {
 				pilihUbahHapusData()
 			}
 		case 3:
 			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
+				fmt.Println("Belum ada data untuk diurutkan. Silakan tambahkan terlebih dahulu.")
 			} else {
 				pilihSort()
 			}
 		case 4:
 			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
+				fmt.Println("Belum ada data untuk dihitung. Silakan tambahkan terlebih dahulu.")
 			} else {
 				hitungBunga(&data, nData)
 			}
 		case 5:
 			if nData == 0 {
-				fmt.Println("Masukkan data peminjam terlebih dahulu")
+				fmt.Println("Belum ada data untuk dicari. Silakan tambahkan terlebih dahulu.")
 			} else {
 				pilihCari()
 			}
 		case 6:
-			cetakData(data, nData)
+			if nData == 0 {
+				fmt.Println("Belum ada data untuk ditampilkan. Silakan tambahkan terlebih dahulu.")
+			} else {
+				cetakKredit(data, nData)
+			}
+		case 0:
+			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+			fmt.Println("┃    Terima kasih! Sampai jumpa lagi!    ┃")
+			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		default:
-			fmt.Println("Pilihan tidak tersedia. Coba lagi.")
+			fmt.Println("Pilihan tidak tersedia. Silakan coba lagi.")
 		}
 		if pilih == 0 {
 			break
@@ -83,44 +100,60 @@ func tambahData(A *tabPinjaman, n *int) {
 	var i, jumlah int
 	var idP string
 
-	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-	fmt.Println("           TAMBAH DATA PEMINJAM BARU           ")
-	fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃         TAMBAH DATA PEMINJAM BARU         ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ PENJELASAN                                ┃")
+	fmt.Println("┃ Setiap peminjam punya:                    ┃")
+	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
+	fmt.Println("┃                                           ┃")
+	fmt.Println("┃ Contoh                                    ┃")
+	fmt.Println("┃  ID Unik                : A01             ┃")
+	fmt.Println("┃  Nama Peminjam          : Deni_Saepudin   ┃")
+	fmt.Println("┃  Jumlah Pinjaman (Rp)   : 10000000        ┃")
+	fmt.Println("┃  Tenor Pinjaman (bulan) : 12              ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+
 	fmt.Print("Jumlah data yang ingin dimasukkan (max 10): ")
 	fmt.Scan(&jumlah)
 
-	if jumlah > NMAX {
-		jumlah = NMAX
-		fmt.Println("Kapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10.")
-	}
-
-	for i = 0; i < jumlah; i++ {
-		fmt.Println("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-		fmt.Printf("Data peminjam ke-%d\n", *n+1)
-
-		for {
-			fmt.Print("Masukkan ID unik: ")
-			fmt.Scan(&idP)
-			if !IDSama(*A, *n, idP) {
-				A[*n].id = idP
-				break
-			} else {
-				fmt.Println("ID sudah digunakan, Silakan masukkan ID lain.")
-			}
+	if *n < NMAX {
+		if jumlah > NMAX {
+			jumlah = NMAX
+			fmt.Println("\033[31mKapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10\033[0m")
 		}
 
-		fmt.Print("Nama peminjam: ")
-		fmt.Scan(&A[*n].nama)
+		for i = 0; i < jumlah; i++ {
+			fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+			fmt.Printf("Data peminjam ke-%d\n", *n+1)
 
-		fmt.Print("Jumlah pinjaman (Rp): ")
-		fmt.Scan(&A[*n].pinjaman)
+			for {
+				fmt.Print("ID unik                : ")
+				fmt.Scan(&idP)
+				if !IDSama(*A, *n, idP) {
+					A[*n].id = idP
+					break
+				} else {
+					fmt.Println("ID sudah digunakan, Silakan masukkan ID lain.")
+				}
+			}
 
-		fmt.Print("Tenor pinjaman (bulan): ")
-		fmt.Scan(&A[*n].tenor)
+			fmt.Print("Nama peminjam          : ")
+			fmt.Scan(&A[*n].nama)
 
-		*n++
+			fmt.Print("Jumlah pinjaman (Rp)   : ")
+			fmt.Scan(&A[*n].pinjaman)
+
+			fmt.Print("Tenor pinjaman (bulan) : ")
+			fmt.Scan(&A[*n].tenor)
+
+			*n++
+		}
+		fmt.Println("\nData berhasil ditambahkan!")
+	} else {
+		fmt.Println("Data tidak dapat ditambahkan, kapasitas sudah penuh!")
 	}
-	fmt.Println("Data berhasil ditambahkan!")
+
 }
 
 func IDSama(A tabPinjaman, n int, idP string) bool {
@@ -261,6 +294,7 @@ func pilihSort() {
 	fmt.Println("2. Data terurut menaik berdasarkan tenor    ")
 	fmt.Println("3. Data terurut menurun berdasarkan pinjaman")
 	fmt.Println("4. Data terurut menurun berdasarkan tenor   ")
+	fmt.Println("0. BACK                                     ")
 	fmt.Print("Pilih No ➝  ")
 	fmt.Scan(&pilih)
 
@@ -401,9 +435,16 @@ func hitungBunga(A *tabPinjaman, n int) {
 
 	for i = 0; i < n; i++ {
 		A[i].bunga = (A[i].bunga + 100) / 100
-		A[i].tBunga = ((A[i].bunga + 100) / 100) * float64(A[i].pinjaman)
+		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
 		A[i].kredit = A[i].tBunga / float64(A[i].tenor)
 	}
+	for i = 0; i < n; i++ {
+		fmt.Printf("%.0f %.0f \n", A[i].tBunga, A[i].kredit)
+	}
+}
+
+func cetakKredit(A tabPinjaman, n int) {
+	var i int
 	for i = 0; i < n; i++ {
 		fmt.Printf("%s %s %d %d %.0f %.0f \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
 	}
