@@ -117,13 +117,13 @@ func tambahData(A *tabPinjaman, n *int) {
 	fmt.Println("┃  Tenor Pinjaman (bulan) : 12              ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
-	fmt.Print("Jumlah data yang ingin dimasukkan (max 10): ")
+	fmt.Print("Jumlah Data yang Ingin Dimasukkan (Max 10): ")
 	fmt.Scan(&jumlah)
 
 	if *n < NMAX {
 		if jumlah > NMAX {
 			jumlah = NMAX
-			fmt.Println("\033[31mKapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10!\033[0m")
+			fmt.Println("\033[31mKapasitas Maksimal Tercapai. Data yang Ditambahkan Dibatasi Menjadi 10!\033[0m")
 		}
 
 		for i = 0; i < jumlah; i++ {
@@ -137,24 +137,24 @@ func tambahData(A *tabPinjaman, n *int) {
 					A[*n].id = idP
 					break
 				} else {
-					fmt.Println("ID sudah digunakan, Silakan masukkan ID lain!")
+					fmt.Println("ID Sudah Digunakan, Silakan Masukkan ID Lain!")
 				}
 			}
 
 			fmt.Print("Nama peminjam          : ")
 			fmt.Scan(&A[*n].nama)
 
-			fmt.Print("Jumlah pinjaman (Rp)   : ")
+			fmt.Print("Jumlah Pinjaman (Rp)   : ")
 			fmt.Scan(&A[*n].pinjaman)
 
-			fmt.Print("Tenor pinjaman (bulan) : ")
+			fmt.Print("Tenor Pinjaman (Bulan) : ")
 			fmt.Scan(&A[*n].tenor)
 
 			*n++
 		}
-		fmt.Println("\nData berhasil ditambahkan!")
+		fmt.Println("\nData Berhasil Ditambahkan!")
 	} else {
-		fmt.Println("Data tidak dapat ditambahkan, kapasitas sudah penuh!")
+		fmt.Println("Data Tidak Dapat Ditambahkan, Kapasitas Sudah Penuh!")
 	}
 
 }
@@ -413,16 +413,18 @@ func cariSequentialData(A *tabPinjaman, n int) {
 	for i = 0; i < n && found == false; i++ {
 		if A[i].id == id {
 			found = true
-			fmt.Println("ID:", A[i].id)
-			fmt.Println("Nama:", A[i].nama)
-			fmt.Println("Pinjaman:", A[i].pinjaman)
-			fmt.Println("Tenor:", A[i].tenor)
-			fmt.Printf("Total pembayaran: %.2f\n", A[i].tBunga)
-			fmt.Printf("Cicilan per bulan: %.2f\n", A[i].kredit)
+			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[i].id)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[i].nama)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[i].pinjaman)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[i].tenor)
+			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Total Pembayaran: ", A[i].tBunga)
+			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Cicilan per Bulan: ", A[i].kredit)
+			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		}
 	}
 	if found == false {
-		fmt.Println("ID tidak ditemukan")
+		fmt.Println("ID Tidak Ditemukan")
 	}
 }
 
@@ -433,7 +435,7 @@ func cariBinaryData(A *tabPinjaman, n int) {
 
 	insertionSortPinjaman(A, n)
 
-	fmt.Print("Masukkan jumlah pinjaman yang ingin dicari: ")
+	fmt.Print("Masukkan Jumlah Pinjaman yang Ingin Dicari: ")
 	fmt.Scan(&pinjaman)
 
 	kiri = 0
@@ -442,12 +444,15 @@ func cariBinaryData(A *tabPinjaman, n int) {
 	for kiri <= kanan && found == false {
 		tengah = (kiri + kanan) / 2
 		if A[tengah].pinjaman == pinjaman {
-			fmt.Println("ID:", A[tengah].id)
-			fmt.Println("Nama:", A[tengah].nama)
-			fmt.Println("Pinjaman:", A[tengah].pinjaman)
-			fmt.Println("Tenor:", A[tengah].tenor)
-			fmt.Printf("Total pembayaran: %.0f\n", A[tengah].tBunga)
-			fmt.Printf("Cicilan per bulan: %.0f\n", A[tengah].kredit)
+			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[tengah].id)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[tengah].nama)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[tengah].pinjaman)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[tengah].tenor)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[tengah].tBunga)
+			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Total Pembayaran: ", A[tengah].tBunga)
+			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Cicilan per Bulan: ", A[tengah].kredit)
+			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 			found = true
 		} else if pinjaman < A[tengah].pinjaman {
 			kanan = tengah - 1
@@ -464,13 +469,16 @@ func nilaiMax(A tabPinjaman, n int) {
 			idxMax = i
 		}
 	}
-	fmt.Println("Data dengan total pembayaran tertinggi:")
-	fmt.Println("ID:", A[idxMax].id)
-	fmt.Println("Nama:", A[idxMax].nama)
-	fmt.Println("Pinjaman:", A[idxMax].pinjaman)
-	fmt.Println("Tenor:", A[idxMax].tenor)
-	fmt.Printf("Total pembayaran: %.0f\n", A[idxMax].tBunga)
-	fmt.Printf("Cicilan per bulan: %.0f\n", A[idxMax].kredit)
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ \033[31m%-42s\033[0m┃\n", "  Data Dengan Total Pembayaran Tertinggi")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[idxMax].id)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[idxMax].nama)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[idxMax].pinjaman)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[idxMax].tenor)
+	fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Total Pembayaran: ", A[idxMax].tBunga)
+	fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Cicilan per Bulan: ", A[idxMax].kredit)
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func nilaiMin(A tabPinjaman, n int) {
@@ -480,13 +488,16 @@ func nilaiMin(A tabPinjaman, n int) {
 			idxMin = i
 		}
 	}
-	fmt.Println("Data dengan total pembayaran terendah:")
-	fmt.Println("ID:", A[idxMin].id)
-	fmt.Println("Nama:", A[idxMin].nama)
-	fmt.Println("Pinjaman:", A[idxMin].pinjaman)
-	fmt.Println("Tenor:", A[idxMin].tenor)
-	fmt.Printf("Total pembayaran: %.0f\n", A[idxMin].tBunga)
-	fmt.Printf("Cicilan per bulan: %.0f\n", A[idxMin].kredit)
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ \033[34m%-42s\033[0m┃\n", " Data Dengan Total Pembayaran Terendah")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[idxMin].id)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[idxMin].nama)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[idxMin].pinjaman)
+	fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[idxMin].tenor)
+	fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Total Pembayaran: ", A[idxMin].tBunga)
+	fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Cicilan per Bulan: ", A[idxMin].kredit)
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func cetakData(A tabPinjaman, n int) {
