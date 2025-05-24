@@ -19,6 +19,7 @@ var data tabPinjaman
 var nData int
 
 func main() {
+	fmt.Println("⎛⎝ ≽ > ⩊ < ≼ ⎠⎞      ﷽     ⎛⎝ ≽ > ⩊ < ≼ ⎠⎞")
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Println("┃   Selamat datang di Aplikasi Pinjaman  ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
@@ -43,7 +44,7 @@ func menu() {
 		fmt.Println("┃ [4] Hitung Bunga & Cicilan             ┃")
 		fmt.Println("┃ [5] Cari Data Peminjam                 ┃")
 		fmt.Println("┃ [6] Tampilkan Laporan                  ┃")
-		fmt.Println("┃ [0] EXIT                               ┃")
+		fmt.Println("┃ [0] Exit                               ┃")
 		fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		fmt.Print("Pilih No ➝  ")
 
@@ -55,40 +56,40 @@ func menu() {
 			tambahData(&data, &nData)
 		case 2:
 			if nData == 0 {
-				fmt.Println("Belum ada data peminjam. Silakan tambahkan terlebih dahulu!")
+				fmt.Println("Belum Ada Data Peminjam. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				pilihUbahHapusData()
 			}
 		case 3:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk diurutkan. Silakan tambahkan terlebih dahulu!")
+				fmt.Println("Belum Ada Data Untuk Diurutkan. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				pilihSort()
 			}
 		case 4:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk dihitung. Silakan tambahkan terlebih dahulu!")
+				fmt.Println("Belum Ada Data Untuk Dihitung. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				hitungBunga(&data, nData)
 			}
 		case 5:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk dicari. Silakan tambahkan terlebih dahulu!")
+				fmt.Println("Belum Ada Data Untuk Dicari. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				pilihCari()
 			}
 		case 6:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk ditampilkan. Silakan tambahkan terlebih dahulu!")
+				fmt.Println("Belum Ada Data Untuk Ditampilkan. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				cetakKredit(data, nData)
 			}
 		case 0:
 			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-			fmt.Println("┃    Terima kasih! Sampai jumpa lagi!    ┃")
+			fmt.Println("┃    TERIMA KASIH! SAMPAI JUMPA LAGI!    ┃")
 			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		default:
-			fmt.Println("Pilihan tidak tersedia. Silakan coba lagi!")
+			fmt.Println("Pilihan Tidak Tersedia. Silakan Coba Lagi!")
 		}
 		if pilih == 0 {
 			break
@@ -195,29 +196,29 @@ func ubahData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin diubah: ")
+	fmt.Print("Masukkan ID yang Ingin Diubah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
 		if A[i].id == id {
-			fmt.Println("Masukkan data baru untuk mengganti!")
+			fmt.Println("Masukkan Data Baru Untuk Mengganti.")
 
-			fmt.Print("Nama peminjam          : ")
+			fmt.Print("Nama Peminjam          : ")
 			fmt.Scan(&A[i].nama)
 
-			fmt.Print("Jumlah pinjaman (Rp)   : ")
+			fmt.Print("Jumlah Pinjaman (Rp)   : ")
 			fmt.Scan(&A[i].pinjaman)
 
-			fmt.Print("Tenor pinjaman (bulan) : ")
+			fmt.Print("Tenor Pinjaman (Bulan) : ")
 			fmt.Scan(&A[i].tenor)
 
 			found = true
 		}
 	}
 	if found == false {
-		fmt.Println("ID tidak ditemukan!")
+		fmt.Println("ID Tidak Ditemukan!")
 	} else {
-		fmt.Println("Data berhasil diubah!")
+		fmt.Println("Data Berhasil Diubah!")
 	}
 }
 
@@ -227,7 +228,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dihapus: ")
+	fmt.Print("Masukkan ID yang Ingin Dihapus: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
@@ -240,33 +241,164 @@ func hapusData(A *tabPinjaman, n *int) {
 		}
 	}
 	if found == false {
-		fmt.Println("ID tidak ditemukan")
+		fmt.Println("ID Tidak Ditemukan")
 	} else {
-		fmt.Println("Data berhasil dihapus")
+		fmt.Println("Data Berhasil Dihapus")
 	}
 }
 
-func pilihCari() {
+func pilihSort() {
 	var pilih int
 
-	fmt.Println("Pilih pencarian                             ")
-	fmt.Println("1. Cari ID peminjam                         ")
-	fmt.Println("2. Cari pinjaman terendah                   ")
-	fmt.Println("3. Cari pinjaman tertinggi                  ")
-	fmt.Println("0. BACK                                     ")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃          PENGURUTAN DATA PEMINJAM         ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ [1] Data Terurut Menaik - Pinjaman        ┃")
+	fmt.Println("┃ [2] Data Terurut Menaik - Tenor           ┃")
+	fmt.Println("┃ [3] Data Terurut Menurun - Pinjaman       ┃")
+	fmt.Println("┃ [4] Data Terurut Menurun - Tenor          ┃")
+	fmt.Println("┃ [0] Kembali ke Menu Utama                 ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 	fmt.Print("Pilih No ➝  ")
 	fmt.Scan(&pilih)
 
-	if pilih == 1 {
-		cariSequentialData(&data, nData)
-	} else if pilih == 2 {
-		nilaiMin(data, nData)
-	} else if pilih == 3 {
-		nilaiMax(data, nData)
-	} else if pilih == 4 {
-		cariBinaryData(&data, nData)
+	switch pilih {
+	case 1:
+		insertionSortPinjaman(&data, nData)
+	case 2:
+		insertionSortTenor(&data, nData)
+	case 3:
+		selectionSortPinjaman(&data, nData)
+	case 4:
+		selectionSortTenor(&data, nData)
+	}
+}
+
+func insertionSortPinjaman(A *tabPinjaman, n int) {
+	var pass, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp.pinjaman < A[i-1].pinjaman {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+	}
+	cetakData(data, nData)
+	fmt.Println("Data Peminjam Telah Diurutkan Menaik - Pinjaman.")
+}
+
+func insertionSortTenor(A *tabPinjaman, n int) {
+	var pass, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		i = pass
+		temp = A[pass]
+		for i > 0 && temp.tenor < A[i-1].tenor {
+			A[i] = A[i-1]
+			i--
+		}
+		A[i] = temp
+		pass++
+	}
+	cetakData(data, nData)
+	fmt.Println("Data Peminjam Telah Diurutkan Menaik - Tenor.")
+}
+
+func selectionSortPinjaman(A *tabPinjaman, n int) {
+	var pass, idx, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[i].pinjaman > A[idx].pinjaman {
+				idx = i
+			}
+			i++
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+		pass++
+	}
+	cetakData(data, nData)
+	fmt.Println("Data Peminjam Telah Diurutkan Menurut - Pinjaman.")
+}
+
+func selectionSortTenor(A *tabPinjaman, n int) {
+	var pass, idx, i int
+	var temp pinjaman
+	pass = 1
+	for pass < n {
+		idx = pass - 1
+		i = pass
+		for i < n {
+			if A[i].tenor > A[idx].tenor {
+				idx = i
+			}
+			i++
+		}
+		temp = A[pass-1]
+		A[pass-1] = A[idx]
+		A[idx] = temp
+		pass++
+	}
+	cetakData(data, nData)
+	fmt.Println("Data Peminjam Telah Diurutkan Menurun - Tenor.")
+}
+
+//tinggal edit func kebawah + status pembayaran belum ada :)
+func hitungBunga(A *tabPinjaman, n int) {
+	var i int
+
+	for i = 0; i < n; i++ {
+		fmt.Printf("Masukkan Suku Bunga Untuk Data ke-%d (%%): ", i+1)
+		fmt.Scan(&A[i].bunga)
 	}
 
+	for i = 0; i < n; i++ {
+		A[i].bunga = (A[i].bunga + 100) / 100
+		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
+		A[i].kredit = A[i].tBunga / float64(A[i].tenor)
+	}
+	for i = 0; i < n; i++ {
+		fmt.Printf("%.0f %.0f \n", A[i].tBunga, A[i].kredit)
+	}
+}
+
+//func pilihCari udh diedit
+func pilihCari() {
+	var pilih int
+
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃           PENCARIAN DATA PEMINJAM         ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ [1] Cari ID Peminjam                      ┃")
+	fmt.Println("┃ [2] Cari                                  ┃")
+	fmt.Println("┃ [3] Cari Pinjaman Terendah                ┃")
+	fmt.Println("┃ [4] Cari Pinjaman Tertinggi               ┃")
+	fmt.Println("┃ [0] Back                                  ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Print("Pilih No ➝  ")
+	fmt.Scan(&pilih)
+
+	switch pilih {
+	case 1:
+		cariSequentialData(&data, nData)
+	case 2:
+		cariBinaryData(&data, nData)
+	case 3:
+		nilaiMin(data, nData)
+	case 4:
+		nilaiMax(data, nData)
+	}
 }
 
 func cariSequentialData(A *tabPinjaman, n int) {
@@ -325,118 +457,6 @@ func cariBinaryData(A *tabPinjaman, n int) {
 	}
 }
 
-func pilihSort() {
-	var pilih int
-
-	fmt.Println("Pilih metode pengurutan                     ")
-	fmt.Println("1. Data terurut menaik berdasarkan pinjaman ")
-	fmt.Println("2. Data terurut menaik berdasarkan tenor    ")
-	fmt.Println("3. Data terurut menurun berdasarkan pinjaman")
-	fmt.Println("4. Data terurut menurun berdasarkan tenor   ")
-	fmt.Println("0. BACK                                     ")
-	fmt.Print("Pilih No ➝  ")
-	fmt.Scan(&pilih)
-
-	if pilih == 1 {
-		insertionSortPinjaman(&data, nData)
-	} else if pilih == 2 {
-		insertionSortTenor(&data, nData)
-	} else if pilih == 3 {
-		selectionSortPinjaman(&data, nData)
-	} else if pilih == 4 {
-		selectionSortTenor(&data, nData)
-	}
-}
-
-func selectionSortPinjaman(A *tabPinjaman, n int) {
-	var pass, idx, i int
-	var temp pinjaman
-	pass = 1
-	for pass < n {
-		idx = pass - 1
-		i = pass
-		for i < n {
-			if A[i].pinjaman > A[idx].pinjaman {
-				idx = i
-			}
-			i++
-		}
-		temp = A[pass-1]
-		A[pass-1] = A[idx]
-		A[idx] = temp
-		pass++
-	}
-	cetakData(data, nData)
-}
-
-func selectionSortTenor(A *tabPinjaman, n int) {
-	var pass, idx, i int
-	var temp pinjaman
-	pass = 1
-	for pass < n {
-		idx = pass - 1
-		i = pass
-		for i < n {
-			if A[i].tenor > A[idx].tenor {
-				idx = i
-			}
-			i++
-		}
-		temp = A[pass-1]
-		A[pass-1] = A[idx]
-		A[idx] = temp
-		pass++
-	}
-	cetakData(data, nData)
-}
-
-func insertionSortPinjaman(A *tabPinjaman, n int) {
-	var pass, i int
-	var temp pinjaman
-	pass = 1
-	for pass < n {
-		i = pass
-		temp = A[pass]
-		for i > 0 && temp.pinjaman < A[i-1].pinjaman {
-			A[i] = A[i-1]
-			i--
-		}
-		A[i] = temp
-		pass++
-	}
-	cetakData(data, nData)
-}
-
-func insertionSortTenor(A *tabPinjaman, n int) {
-	var pass, i int
-	var temp pinjaman
-	pass = 1
-	for pass < n {
-		i = pass
-		temp = A[pass]
-		for i > 0 && temp.tenor < A[i-1].tenor {
-			A[i] = A[i-1]
-			i--
-		}
-		A[i] = temp
-		pass++
-	}
-	cetakData(data, nData)
-}
-
-func cetakData(A tabPinjaman, n int) {
-	var i int
-
-	fmt.Println("Data saat ini")
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃\n", "ID", "Nama", "Pinjaman", "Tenor")
-	fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
-	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
-	}
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
-}
-
 func nilaiMax(A tabPinjaman, n int) {
 	var i, idxMax int
 	for i = 0; i < n; i++ {
@@ -469,22 +489,17 @@ func nilaiMin(A tabPinjaman, n int) {
 	fmt.Printf("Cicilan per bulan: %.0f\n", A[idxMin].kredit)
 }
 
-func hitungBunga(A *tabPinjaman, n int) {
+func cetakData(A tabPinjaman, n int) {
 	var i int
 
+	fmt.Println("Data Saat Ini")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃\n", "ID", "Nama", "Pinjaman", "Tenor")
+	fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
 	for i = 0; i < n; i++ {
-		fmt.Printf("Masukkan suku bunga untuk data ke-%d (%%): ", i+1)
-		fmt.Scan(&A[i].bunga)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
 	}
-
-	for i = 0; i < n; i++ {
-		A[i].bunga = (A[i].bunga + 100) / 100
-		A[i].tBunga = A[i].bunga * float64(A[i].pinjaman)
-		A[i].kredit = A[i].tBunga / float64(A[i].tenor)
-	}
-	for i = 0; i < n; i++ {
-		fmt.Printf("%.0f %.0f \n", A[i].tBunga, A[i].kredit)
-	}
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func cetakKredit(A tabPinjaman, n int) {
