@@ -258,16 +258,18 @@ func pilihCari() {
 	fmt.Scan(&pilih)
 
 	if pilih == 1 {
-		cariData(&data, nData)
+		cariSequentialData(&data, nData)
 	} else if pilih == 2 {
 		nilaiMin(data, nData)
 	} else if pilih == 3 {
 		nilaiMax(data, nData)
+	} else if pilih == 4 {
+		cariBinaryData(&data, nData)
 	}
 
 }
 
-func cariData(A *tabPinjaman, n int) {
+func cariSequentialData(A *tabPinjaman, n int) {
 	var i int
 	var id string
 	var found bool = false
@@ -289,6 +291,37 @@ func cariData(A *tabPinjaman, n int) {
 	}
 	if found == false {
 		fmt.Println("ID tidak ditemukan")
+	}
+}
+
+func cariBinaryData(A *tabPinjaman, n int) {
+	var pinjaman int
+	var kiri, kanan, tengah int
+	var found bool = false
+
+	insertionSortPinjaman(A, n)
+
+	fmt.Print("Masukkan jumlah pinjaman yang ingin dicari: ")
+	fmt.Scan(&pinjaman)
+
+	kiri = 0
+	kanan = n - 1
+
+	for kiri <= kanan && found == false {
+		tengah = (kiri + kanan) / 2
+		if A[tengah].pinjaman == pinjaman {
+			fmt.Println("ID:", A[tengah].id)
+			fmt.Println("Nama:", A[tengah].nama)
+			fmt.Println("Pinjaman:", A[tengah].pinjaman)
+			fmt.Println("Tenor:", A[tengah].tenor)
+			fmt.Printf("Total pembayaran: %.0f\n", A[tengah].tBunga)
+			fmt.Printf("Cicilan per bulan: %.0f\n", A[tengah].kredit)
+			found = true
+		} else if pinjaman < A[tengah].pinjaman {
+			kanan = tengah - 1
+		} else {
+			kiri = tengah + 1
+		}
 	}
 }
 
