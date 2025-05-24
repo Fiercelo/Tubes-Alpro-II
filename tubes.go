@@ -107,8 +107,8 @@ func tambahData(A *tabPinjaman, n *int) {
 	fmt.Println("┃ PENJELASAN                                ┃")
 	fmt.Println("┃ Setiap peminjam punya:                    ┃")
 	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
-	fmt.Println("┃ NOTE: Masukkan maksimal 5 huruf untuk ID  ┃")
-	fmt.Println("┃       dan maksimal 2 kata untuk nama      ┃")
+	fmt.Println("┃ NOTE: Maksimal 5 huruf/angka untuk ID dan ┃")
+	fmt.Println("┃       maksimal 2 kata untuk nama          ┃")
 	fmt.Println("┃                                           ┃")
 	fmt.Println("┃ Contoh                                    ┃")
 	fmt.Println("┃  ID Unik                : A01             ┃")
@@ -358,6 +358,14 @@ func selectionSortTenor(A *tabPinjaman, n int) {
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
 
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃         MENGHITUNG BUNGA & CICILAN        ┃")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ Masukkan suku bunga untuk tiap peminjam.  ┃")
+	fmt.Println("┃ Bunga akan dihitung terhadap jumlah       ┃")
+	fmt.Println("┃ pinjaman dan tenor dalam bulan.           ┃")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+
 	for i = 0; i < n; i++ {
 		fmt.Printf("Masukkan Suku Bunga Untuk Data ke-%d (%%): ", i+1)
 		fmt.Scan(&A[i].bunga)
@@ -380,8 +388,8 @@ func pilihCari() {
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Println("┃           PENCARIAN DATA PEMINJAM         ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ [1] Cari ID Peminjam                      ┃")
-	fmt.Println("┃ [2] Cari                                  ┃")
+	fmt.Println("┃ [1] Cari Data Peminjam dengan ID          ┃")
+	fmt.Println("┃ [2] Cari Data Peminjam dengan Pinjaman    ┃")
 	fmt.Println("┃ [3] Cari Pinjaman Terendah                ┃")
 	fmt.Println("┃ [4] Cari Pinjaman Tertinggi               ┃")
 	fmt.Println("┃ [0] Back                                  ┃")
@@ -407,7 +415,7 @@ func cariSequentialData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang ingin dicari: ")
+	fmt.Print("Masukkan ID: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -435,7 +443,7 @@ func cariBinaryData(A *tabPinjaman, n int) {
 
 	insertionSortPinjaman(A, n)
 
-	fmt.Print("Masukkan Jumlah Pinjaman yang Ingin Dicari: ")
+	fmt.Print("Masukkan Pinjaman: ")
 	fmt.Scan(&pinjaman)
 
 	kiri = 0
@@ -515,7 +523,13 @@ func cetakData(A tabPinjaman, n int) {
 
 func cetakKredit(A tabPinjaman, n int) {
 	var i int
+
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan")
+	fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
 	for i = 0; i < n; i++ {
-		fmt.Printf("%s %s %d %d %.0f %.0f \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
 	}
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+
 }
