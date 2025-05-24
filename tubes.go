@@ -55,31 +55,31 @@ func menu() {
 			tambahData(&data, &nData)
 		case 2:
 			if nData == 0 {
-				fmt.Println("Belum ada data peminjam. Silakan tambahkan terlebih dahulu.")
+				fmt.Println("Belum ada data peminjam. Silakan tambahkan terlebih dahulu!")
 			} else {
 				pilihUbahHapusData()
 			}
 		case 3:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk diurutkan. Silakan tambahkan terlebih dahulu.")
+				fmt.Println("Belum ada data untuk diurutkan. Silakan tambahkan terlebih dahulu!")
 			} else {
 				pilihSort()
 			}
 		case 4:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk dihitung. Silakan tambahkan terlebih dahulu.")
+				fmt.Println("Belum ada data untuk dihitung. Silakan tambahkan terlebih dahulu!")
 			} else {
 				hitungBunga(&data, nData)
 			}
 		case 5:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk dicari. Silakan tambahkan terlebih dahulu.")
+				fmt.Println("Belum ada data untuk dicari. Silakan tambahkan terlebih dahulu!")
 			} else {
 				pilihCari()
 			}
 		case 6:
 			if nData == 0 {
-				fmt.Println("Belum ada data untuk ditampilkan. Silakan tambahkan terlebih dahulu.")
+				fmt.Println("Belum ada data untuk ditampilkan. Silakan tambahkan terlebih dahulu!")
 			} else {
 				cetakKredit(data, nData)
 			}
@@ -88,7 +88,7 @@ func menu() {
 			fmt.Println("┃    Terima kasih! Sampai jumpa lagi!    ┃")
 			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		default:
-			fmt.Println("Pilihan tidak tersedia. Silakan coba lagi.")
+			fmt.Println("Pilihan tidak tersedia. Silakan coba lagi!")
 		}
 		if pilih == 0 {
 			break
@@ -106,6 +106,8 @@ func tambahData(A *tabPinjaman, n *int) {
 	fmt.Println("┃ PENJELASAN                                ┃")
 	fmt.Println("┃ Setiap peminjam punya:                    ┃")
 	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
+	fmt.Println("┃ NOTE: Masukkan maksimal 5 huruf untuk ID  ┃")
+	fmt.Println("┃       dan maksimal 2 kata untuk nama      ┃")
 	fmt.Println("┃                                           ┃")
 	fmt.Println("┃ Contoh                                    ┃")
 	fmt.Println("┃  ID Unik                : A01             ┃")
@@ -120,7 +122,7 @@ func tambahData(A *tabPinjaman, n *int) {
 	if *n < NMAX {
 		if jumlah > NMAX {
 			jumlah = NMAX
-			fmt.Println("\033[31mKapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10\033[0m")
+			fmt.Println("\033[31mKapasitas maksimal tercapai. Data yang ditambahkan dibatasi menjadi 10!\033[0m")
 		}
 
 		for i = 0; i < jumlah; i++ {
@@ -134,7 +136,7 @@ func tambahData(A *tabPinjaman, n *int) {
 					A[*n].id = idP
 					break
 				} else {
-					fmt.Println("ID sudah digunakan, Silakan masukkan ID lain.")
+					fmt.Println("ID sudah digunakan, Silakan masukkan ID lain!")
 				}
 			}
 
@@ -198,24 +200,24 @@ func ubahData(A *tabPinjaman, n int) {
 
 	for i = 0; i < n && found == false; i++ {
 		if A[i].id == id {
-			fmt.Println("Ganti data yang ingin diubah")
+			fmt.Println("Masukkan data baru untuk mengganti!")
 
-			fmt.Print("Nama: ")
+			fmt.Print("Nama peminjam          : ")
 			fmt.Scan(&A[i].nama)
 
-			fmt.Print("Pinjaman: ")
+			fmt.Print("Jumlah pinjaman (Rp)   : ")
 			fmt.Scan(&A[i].pinjaman)
 
-			fmt.Print("Tenor (bulan): ")
+			fmt.Print("Tenor pinjaman (bulan) : ")
 			fmt.Scan(&A[i].tenor)
 
 			found = true
 		}
 	}
 	if found == false {
-		fmt.Println("ID tidak ditemukan")
+		fmt.Println("ID tidak ditemukan!")
 	} else {
-		fmt.Println("Data berhasil diubah")
+		fmt.Println("Data berhasil diubah!")
 	}
 }
 
@@ -392,9 +394,14 @@ func insertionSortTenor(A *tabPinjaman, n int) {
 func cetakData(A tabPinjaman, n int) {
 	var i int
 
+	fmt.Println("Data saat ini")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃\n", "ID", "Nama", "Pinjaman", "Tenor")
+	fmt.Println("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃")
 	for i = 0; i < n; i++ {
-		fmt.Printf("%s %s %d %d \n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
 	}
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func nilaiMax(A tabPinjaman, n int) {
