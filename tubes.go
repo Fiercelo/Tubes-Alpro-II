@@ -98,7 +98,7 @@ func menu() {
 }
 
 func tambahData(A *tabPinjaman, n *int) {
-	var i, jumlah, max int
+	var i, jumlah int
 	var idP string
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
@@ -119,7 +119,6 @@ func tambahData(A *tabPinjaman, n *int) {
 
 	fmt.Print("Jumlah Data yang Ingin Dimasukkan (Max 10): ")
 	fmt.Scan(&jumlah)
-	max = NMAX
 	if *n < NMAX {
 		if jumlah > NMAX {
 			jumlah = NMAX
@@ -127,11 +126,6 @@ func tambahData(A *tabPinjaman, n *int) {
 		}
 
 		for i = 0; i < jumlah; i++ {
-			max = max - jumlah
-			if jumlah > NMAX {
-				jumlah = NMAX
-				fmt.Println("\033[31mKapasitas Maksimal Tercapai. Data yang Ditambahkan Dibatasi Menjadi 10!\033[0m")
-			}
 			fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 			fmt.Printf("Data peminjam ke-%d\n", *n+1)
 			for {
