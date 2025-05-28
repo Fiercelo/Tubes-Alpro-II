@@ -5,13 +5,15 @@ import "fmt"
 const NMAX int = 10
 
 type pinjaman struct {
-	id       string
-	nama     string
-	pinjaman int
-	tenor    int
-	bunga    float64
-	tBunga   float64
-	kredit   float64
+	id         string
+	nama       string
+	pinjaman   int
+	tenor      int
+	bunga      float64
+	tBunga     float64
+	kredit     float64
+	totalBayar float64
+	status     string
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -43,7 +45,8 @@ func menu() {
 		fmt.Println("┃ [3] Urutkan Daftar Peminjam            ┃")
 		fmt.Println("┃ [4] Hitung Bunga & Cicilan             ┃")
 		fmt.Println("┃ [5] Cari Data Peminjam                 ┃")
-		fmt.Println("┃ [6] Tampilkan Laporan                  ┃")
+		fmt.Println("┃ [6] Status Pembayaran                  ┃")
+		fmt.Println("┃ [7] Tampilkan Laporan                  ┃")
 		fmt.Println("┃ [0] Exit                               ┃")
 		fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 		fmt.Print("Pilih No ➝  ")
@@ -79,6 +82,10 @@ func menu() {
 				pilihCari()
 			}
 		case 6:
+			cetakKredit(data, nData)
+			bayarCicilan(&data, nData)
+			statusPembayaran(&data, nData)
+		case 7:
 			if nData == 0 {
 				fmt.Println("Belum Ada Data Untuk Ditampilkan. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
@@ -98,7 +105,7 @@ func menu() {
 }
 
 func tambahData(A *tabPinjaman, n *int) {
-	var i, jumlah int
+	var i, jumlah, max int
 	var idP string
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
@@ -119,10 +126,11 @@ func tambahData(A *tabPinjaman, n *int) {
 
 	fmt.Print("Jumlah Data yang Ingin Dimasukkan (Max 10): ")
 	fmt.Scan(&jumlah)
-	if *n < NMAX {
-		if jumlah > NMAX {
-			jumlah = NMAX
-			fmt.Println("\033[31mKapasitas Maksimal Tercapai. Data yang Ditambahkan Dibatasi Menjadi 10!\033[0m")
+	max = NMAX - *n
+	if max > 0 {
+		if jumlah > max {
+			jumlah = max
+			fmt.Println("Kapasitas Maksimal Tercapai. Data yang Ditambahkan Dibatasi Menjadi ", max)
 		}
 
 		for i = 0; i < jumlah; i++ {
@@ -154,7 +162,6 @@ func tambahData(A *tabPinjaman, n *int) {
 	} else {
 		fmt.Println("Data Tidak Dapat Ditambahkan, Kapasitas Sudah Penuh!")
 	}
-
 }
 
 func IDSama(A tabPinjaman, n int, idP string) bool {
@@ -510,13 +517,65 @@ func nilaiMin(A tabPinjaman, n int) {
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
+func bayarCicilan(A *tabPinjaman, n int) {
+	var id string
+	var cicilan float64
+	var ketemu bool = false
+	fmt.Print("Masukkan ID Nasabah: ")
+	fmt.Scan(&id)
+
+	for i := 0; i < n; i++ {
+		if A[i].id == id && ketemu == false {
+			ketemu = true
+			fmt.Printf("Masukkan jumlah cicilan yang dibayar oleh %s: ", A[i].nama)
+			fmt.Scan(&cicilan)
+
+			A[i].totalBayar += cicilan
+
+			if A[i].totalBayar >= A[i].tBunga {
+				fmt.Println(" Pembayaran lunas. Terima kasih!")
+			} else {
+				sisa := A[i].tBunga - A[i].totalBayar
+				fmt.Printf(" Pembayaran tercatat. Sisa pembayaran: Rp %.0f\n", sisa)
+			}
+		}
+	}
+	if ketemu == true {
+		fmt.Println("ID Tidak Ditemukan!")
+	}
+}
+
+func statusPembayaran(A *tabPinjaman, n int) {
+	var i int
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃                              STATUS PEMBAYARAN NASABAH                                   ┃")
+	fmt.Println("┣━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┫")
+	fmt.Println("┃ ID   ┃ Nama           ┃ Pinjaman   ┃ Tenor ┃ Total Bayar  ┃ Cicilan/Bln  ┃ Status        ┃")
+	fmt.Println("┣━━━━━━╋━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━╋━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫")
+
+	for i = 0; i < n; i++ {
+		A[i].status = "Belum Lunas"
+		if A[i].kredit > 0 {
+			if A[i].totalBayar >= A[i].tBunga {
+				A[i].status = "Lunas"
+			} else {
+				A[i].status = "Dalam Cicilan"
+			}
+		}
+
+		fmt.Printf("┃ %-4s ┃ %-14s ┃ %-10d ┃ %-5d ┃ %-12.0f ┃ %-12.0f ┃ %-13s ┃\n",
+			A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].status)
+	}
+
+	fmt.Println("┗━━━━━━┻━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━┻━━━━━━━┻━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━┛")
+}
+
 func cetakData(A tabPinjaman, n int) {
 	var i int
 
-	fmt.Println("Data Saat Ini")
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃\n", "ID", "Nama", "Pinjaman", "Tenor")
-	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	for i = 0; i < n; i++ {
 		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor)
 	}
@@ -526,12 +585,12 @@ func cetakData(A tabPinjaman, n int) {
 func cetakKredit(A tabPinjaman, n int) {
 	var i int
 
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan")
-	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan", "Status Pembayaran")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].status)
 	}
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
 }
