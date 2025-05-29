@@ -521,6 +521,7 @@ func nilaiMin(A tabPinjaman, n int) {
 func bayarCicilan(A *tabPinjaman, n int) {
 	var id string
 	var i int
+	var cicilan float64
 	var ketemu bool = false
 
 	fmt.Print("Masukkan ID Nasabah: ")
@@ -530,20 +531,21 @@ func bayarCicilan(A *tabPinjaman, n int) {
 		if A[i].id == id && !ketemu {
 			ketemu = true
 			fmt.Printf("Masukkan Jumlah Cicilan yang Dibayar Oleh %s: ", A[i].nama)
-			fmt.Scan(&A[i].totalBayar)
+			fmt.Scan(&cicilan)
+
+			A[i].totalBayar = cicilan
 
 			if A[i].totalBayar >= A[i].tBunga {
+				A[i].sisa = 0
 				A[i].status = "Lunas"
 			} else {
 				A[i].sisa = A[i].tBunga - A[i].totalBayar
 				A[i].status = "Belum Lunas"
 			}
-			break
 		}
-	}
-
-	if !ketemu {
-		fmt.Println("ID Tidak Ditemukan")
+		if A[i].id != id {
+			A[i].status = "Belum Lunas"
+		}
 	}
 }
 
