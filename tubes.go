@@ -14,6 +14,7 @@ type pinjaman struct {
 	kredit     float64
 	totalBayar float64
 	status     string
+	sisa       float64
 }
 type tabPinjaman [NMAX]pinjaman
 
@@ -519,55 +520,45 @@ func nilaiMin(A tabPinjaman, n int) {
 
 func bayarCicilan(A *tabPinjaman, n int) {
 	var id string
-	var cicilan float64
+	var i int
 	var ketemu bool = false
+
 	fmt.Print("Masukkan ID Nasabah: ")
 	fmt.Scan(&id)
 
-	for i := 0; i < n; i++ {
-		if A[i].id == id && ketemu == false {
+	for i = 0; i < n; i++ {
+		if A[i].id == id && !ketemu {
 			ketemu = true
-			fmt.Printf("Masukkan jumlah cicilan yang dibayar oleh %s: ", A[i].nama)
-			fmt.Scan(&cicilan)
-
-			A[i].totalBayar += cicilan
+			fmt.Printf("Masukkan Jumlah Cicilan yang Dibayar Oleh %s: ", A[i].nama)
+			fmt.Scan(&A[i].totalBayar)
 
 			if A[i].totalBayar >= A[i].tBunga {
-				fmt.Println(" Pembayaran lunas. Terima kasih!")
+				A[i].status = "Lunas"
 			} else {
-				sisa := A[i].tBunga - A[i].totalBayar
-				fmt.Printf(" Pembayaran tercatat. Sisa pembayaran: Rp %.0f\n", sisa)
+				A[i].sisa = A[i].tBunga - A[i].totalBayar
+				A[i].status = "Belum Lunas"
 			}
+			break
 		}
 	}
-	if ketemu == true {
-		fmt.Println("ID Tidak Ditemukan!")
+
+	if !ketemu {
+		fmt.Println("ID Tidak Ditemukan")
 	}
 }
 
 func statusPembayaran(A *tabPinjaman, n int) {
 	var i int
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃                              STATUS PEMBAYARAN NASABAH                                   ┃")
-	fmt.Println("┣━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ ID   ┃ Nama           ┃ Pinjaman   ┃ Tenor ┃ Total Bayar  ┃ Cicilan/Bln  ┃ Status        ┃")
-	fmt.Println("┣━━━━━━╋━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━╋━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃ ID   ┃ Nama         ┃ Pinjaman   ┃ Tenor ┃ Total Bayar  ┃ Cicilan    ┃ Sisa Bayar     ┃     Status     ┃")
+	fmt.Println("┣━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━┫")
 
 	for i = 0; i < n; i++ {
-		A[i].status = "Belum Lunas"
-		if A[i].kredit > 0 {
-			if A[i].totalBayar >= A[i].tBunga {
-				A[i].status = "Lunas"
-			} else {
-				A[i].status = "Dalam Cicilan"
-			}
-		}
-
-		fmt.Printf("┃ %-4s ┃ %-14s ┃ %-10d ┃ %-5d ┃ %-12.0f ┃ %-12.0f ┃ %-13s ┃\n",
-			A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].status)
+		fmt.Printf("┃ %-4s ┃ %-12s ┃ %-10d ┃ %-5d ┃ %-12.0f ┃ %-10.0f ┃ %-14.0f ┃ %-14s ┃\n",
+			A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].sisa, A[i].status)
 	}
 
-	fmt.Println("┗━━━━━━┻━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━┻━━━━━━━┻━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func cetakData(A tabPinjaman, n int) {
@@ -585,12 +576,12 @@ func cetakData(A tabPinjaman, n int) {
 func cetakKredit(A tabPinjaman, n int) {
 	var i int
 
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan", "Status Pembayaran")
-	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].status)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
 	}
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
 }
