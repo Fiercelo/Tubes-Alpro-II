@@ -152,7 +152,7 @@ func tambahData(A *tabPinjaman, n *int) {
 				}
 			}
 
-			fmt.Print("Nama Nasabah          : ")
+			fmt.Print("Nama Nasabah           : ")
 			fmt.Scan(&A[*n].nama)
 
 			fmt.Print("Jumlah Pinjaman (Rp)   : ")
@@ -206,14 +206,14 @@ func ubahData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID Nasabah yang Ingin Diubah: ")
+	fmt.Print("Masukkan ID yang Ingin Diubah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
 		if A[i].id == id {
 			fmt.Println("Masukkan Data Baru Untuk Mengganti.")
 
-			fmt.Print("Nama Nasabah          : ")
+			fmt.Print("Nama Nasabah           : ")
 			fmt.Scan(&A[i].nama)
 
 			fmt.Print("Jumlah Pinjaman (Rp)   : ")
@@ -238,7 +238,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID Nasabah yang Ingin Dihapus: ")
+	fmt.Print("Masukkan ID yang Ingin Dihapus: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
@@ -364,7 +364,6 @@ func selectionSortTenor(A *tabPinjaman, n int) {
 	fmt.Println("Data Nasabah Telah Diurutkan Menurun - Tenor.")
 }
 
-//tinggal edit func kebawah + status pembayaran belum ada :)
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
 
@@ -395,7 +394,6 @@ func hitungBunga(A *tabPinjaman, n int) {
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
-//func pilihCari udh diedit
 func pilihCari() {
 	var pilih int
 
@@ -429,7 +427,7 @@ func cariSequentialData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID Nasabah: ")
+	fmt.Print("Masukkan ID: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -563,16 +561,16 @@ func bayarCicilan(A *tabPinjaman, n int) {
 
 func statusPembayaran(A *tabPinjaman, n int) {
 	var i int
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃ ID   ┃ Nama         ┃ Pinjaman   ┃ Tenor ┃ Total Bayar  ┃ Cicilan    ┃ Sisa Bayar     ┃     Status     ┃")
-	fmt.Println("┣━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃ ID    ┃ Nama                 ┃ Pinjaman    ┃ Tenor ┃ Total Bayar  ┃ Cicilan    ┃ Sisa Bayar     ┃     Status     ┃")
+	fmt.Println("┣━━━━━━━┃━━━━━━━━━━━━━━━━━━━━━━┃━━━━━━━━━━━━━┃━━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━┫")
 
 	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-4s ┃ %-12s ┃ %-10d ┃ %-5d ┃ %-12.0f ┃ %-10.0f ┃ %-14.0f ┃ %-14s ┃\n",
+		fmt.Printf("┃ %-5s ┃ %-20s ┃ %-11d ┃ %-5d ┃ %-12.0f ┃ %-10.0f ┃ %-14.0f ┃ %-14s ┃\n",
 			A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].sisa, A[i].status)
 	}
 
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func cetakData(A tabPinjaman, n int) {
