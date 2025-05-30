@@ -83,7 +83,7 @@ func menu() {
 				pilihCari()
 			}
 		case 6:
-			cetakKredit(data, nData)
+			cetakData(data, nData)
 			bayarCicilan(&data, nData)
 			statusPembayaran(&data, nData)
 		case 7:
@@ -526,16 +526,15 @@ func bayarCicilan(A *tabPinjaman, n int) {
 
 	fmt.Print("Masukkan ID Nasabah: ")
 	fmt.Scan(&id)
-
 	for i = 0; i < n; i++ {
 		if A[i].id == id && !ketemu {
 			ketemu = true
 			fmt.Printf("Masukkan Jumlah Cicilan yang Dibayar Oleh %s: ", A[i].nama)
 			fmt.Scan(&cicilan)
 
-			A[i].totalBayar = cicilan
+			A[i].totalBayar += cicilan
 
-			if A[i].totalBayar >= A[i].tBunga {
+			if A[i].totalBayar >= A[i].tBunga-1 {
 				A[i].sisa = 0
 				A[i].status = "Lunas"
 			} else {
@@ -544,7 +543,16 @@ func bayarCicilan(A *tabPinjaman, n int) {
 			}
 		}
 		if A[i].id != id {
-			A[i].status = "Belum Lunas"
+			if A[i].status == "Lunas" {
+			} else {
+				if A[i].sisa != 0 {
+					A[i].status = "Belum Lunas"
+				} else {
+					A[i].status = "Belum Lunas"
+					A[i].sisa = A[i].tBunga - A[i].totalBayar
+				}
+
+			}
 		}
 	}
 }
