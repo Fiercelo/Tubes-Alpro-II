@@ -83,9 +83,13 @@ func menu() {
 				pilihCari()
 			}
 		case 6:
-			cetakData(data, nData)
-			bayarCicilan(&data, nData)
-			statusPembayaran(&data, nData)
+			if nData == 0 {
+				fmt.Println("Belum Ada Data Nasabah. Silakan Tambahkan Terlebih Dahulu!")
+			} else {
+				cetakData(data, nData)
+				bayarCicilan(&data, nData)
+				statusPembayaran(&data, nData)
+			}
 		case 7:
 			if nData == 0 {
 				fmt.Println("Belum Ada Data Untuk Ditampilkan. Silakan Tambahkan Terlebih Dahulu!")
@@ -113,7 +117,7 @@ func tambahData(A *tabPinjaman, n *int) {
 	fmt.Println("┃         TAMBAH DATA NASABAH BARU          ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	fmt.Println("┃ PENJELASAN                                ┃")
-	fmt.Println("┃ Setiap nasabah  punya:                    ┃")
+	fmt.Println("┃ Setiap Nasabah Punya:                     ┃")
 	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
 	fmt.Println("┃ NOTE: Maksimal 5 huruf/angka untuk ID dan ┃")
 	fmt.Println("┃       maksimal 2 kata untuk nama          ┃")
@@ -202,7 +206,7 @@ func ubahData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang Ingin Diubah: ")
+	fmt.Print("Masukkan ID Nasabah yang Ingin Diubah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
@@ -234,7 +238,7 @@ func hapusData(A *tabPinjaman, n *int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID yang Ingin Dihapus: ")
+	fmt.Print("Masukkan ID Nasabah yang Ingin Dihapus: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < *n && found == false; i++ {
@@ -425,7 +429,7 @@ func cariSequentialData(A *tabPinjaman, n int) {
 	var found bool = false
 
 	cetakData(data, nData)
-	fmt.Print("Masukkan ID: ")
+	fmt.Print("Masukkan ID Nasabah: ")
 	fmt.Scan(&id)
 
 	for i = 0; i < n && found == false; i++ {
