@@ -41,11 +41,11 @@ func menu() {
 		fmt.Println(" 𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃   ִֶָ 𓂃˖˳·˖ ִֶָ ⋆🌷͙⋆ ִֶָ˖·˳˖𓂃 ִֶָ")
 		fmt.Println("🌹            PINJAMAN BANK            🌹")
 		fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-		fmt.Println("┃ [1] Tambah Data Peminjam               ┃")
-		fmt.Println("┃ [2] Ubah / Hapus Data Peminjam         ┃")
-		fmt.Println("┃ [3] Urutkan Daftar Peminjam            ┃")
+		fmt.Println("┃ [1] Tambah Data Nasabah                ┃")
+		fmt.Println("┃ [2] Ubah / Hapus Data Nasabah          ┃")
+		fmt.Println("┃ [3] Urutkan Daftar Nasabah             ┃")
 		fmt.Println("┃ [4] Hitung Bunga & Cicilan             ┃")
-		fmt.Println("┃ [5] Cari Data Peminjam                 ┃")
+		fmt.Println("┃ [5] Cari Data Nasabah                  ┃")
 		fmt.Println("┃ [6] Status Pembayaran                  ┃")
 		fmt.Println("┃ [7] Tampilkan Laporan                  ┃")
 		fmt.Println("┃ [0] Exit                               ┃")
@@ -60,7 +60,7 @@ func menu() {
 			tambahData(&data, &nData)
 		case 2:
 			if nData == 0 {
-				fmt.Println("Belum Ada Data Peminjam. Silakan Tambahkan Terlebih Dahulu!")
+				fmt.Println("Belum Ada Data Nasabah. Silakan Tambahkan Terlebih Dahulu!")
 			} else {
 				pilihUbahHapusData()
 			}
@@ -110,19 +110,19 @@ func tambahData(A *tabPinjaman, n *int) {
 	var idP string
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃         TAMBAH DATA PEMINJAM BARU         ┃")
+	fmt.Println("┃         TAMBAH DATA NASABAH BARU          ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	fmt.Println("┃ PENJELASAN                                ┃")
-	fmt.Println("┃ Setiap peminjam punya:                    ┃")
+	fmt.Println("┃ Setiap nasabah  punya:                    ┃")
 	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
 	fmt.Println("┃ NOTE: Maksimal 5 huruf/angka untuk ID dan ┃")
 	fmt.Println("┃       maksimal 2 kata untuk nama          ┃")
 	fmt.Println("┃                                           ┃")
 	fmt.Println("┃ Contoh                                    ┃")
 	fmt.Println("┃  ID Unik                : CL01            ┃")
-	fmt.Println("┃  Nama Peminjam          : Dedi_Gusnaldi   ┃")
-	fmt.Println("┃  Jumlah Pinjaman (Rp)   : 10000000        ┃")
-	fmt.Println("┃  Tenor Pinjaman (bulan) : 12              ┃")
+	fmt.Println("┃  Nama Nasabah           : Dedi_Gusnaldi   ┃")
+	fmt.Println("┃  Jumlah Nasabah  (Rp)   : 10000000        ┃")
+	fmt.Println("┃  Tenor Nasabah  (bulan) : 12              ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
 	fmt.Print("Jumlah Data yang Ingin Dimasukkan (Max 10): ")
@@ -136,7 +136,7 @@ func tambahData(A *tabPinjaman, n *int) {
 
 		for i = 0; i < jumlah; i++ {
 			fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-			fmt.Printf("Data peminjam ke-%d\n", *n+1)
+			fmt.Printf("Data nasabah ke-%d\n", *n+1)
 			for {
 				fmt.Print("ID unik                : ")
 				fmt.Scan(&idP)
@@ -148,7 +148,7 @@ func tambahData(A *tabPinjaman, n *int) {
 				}
 			}
 
-			fmt.Print("Nama peminjam          : ")
+			fmt.Print("Nama Nasabah          : ")
 			fmt.Scan(&A[*n].nama)
 
 			fmt.Print("Jumlah Pinjaman (Rp)   : ")
@@ -179,10 +179,10 @@ func pilihUbahHapusData() {
 	var pilih int
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃         UBAH / HAPUS DATA PEMINJAM        ┃")
+	fmt.Println("┃         UBAH / HAPUS DATA NASABAH         ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ [1] Ubah Data Peminjam                    ┃")
-	fmt.Println("┃ [2] Hapus Data Peminjam                   ┃")
+	fmt.Println("┃ [1] Ubah Data Nasabah                     ┃")
+	fmt.Println("┃ [2] Hapus Data Nasabah                    ┃")
 	fmt.Println("┃ [0] Kembali ke Menu Utama                 ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 	fmt.Print("Pilih No ➝  ")
@@ -209,7 +209,7 @@ func ubahData(A *tabPinjaman, n int) {
 		if A[i].id == id {
 			fmt.Println("Masukkan Data Baru Untuk Mengganti.")
 
-			fmt.Print("Nama Peminjam          : ")
+			fmt.Print("Nama Nasabah          : ")
 			fmt.Scan(&A[i].nama)
 
 			fmt.Print("Jumlah Pinjaman (Rp)   : ")
@@ -257,7 +257,7 @@ func pilihSort() {
 	var pilih int
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃          PENGURUTAN DATA PEMINJAM         ┃")
+	fmt.Println("┃          PENGURUTAN DATA NASABAH          ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	fmt.Println("┃ [1] Data Terurut Menaik - Pinjaman        ┃")
 	fmt.Println("┃ [2] Data Terurut Menaik - Tenor           ┃")
@@ -295,7 +295,7 @@ func insertionSortPinjaman(A *tabPinjaman, n int) {
 		pass++
 	}
 	cetakData(data, nData)
-	fmt.Println("Data Peminjam Telah Diurutkan Menaik - Pinjaman.")
+	fmt.Println("Data Nasabah Telah Diurutkan Menaik - Pinjaman.")
 }
 
 func insertionSortTenor(A *tabPinjaman, n int) {
@@ -313,7 +313,7 @@ func insertionSortTenor(A *tabPinjaman, n int) {
 		pass++
 	}
 	cetakData(data, nData)
-	fmt.Println("Data Peminjam Telah Diurutkan Menaik - Tenor.")
+	fmt.Println("Data Nasabah Telah Diurutkan Menaik - Tenor.")
 }
 
 func selectionSortPinjaman(A *tabPinjaman, n int) {
@@ -335,7 +335,7 @@ func selectionSortPinjaman(A *tabPinjaman, n int) {
 		pass++
 	}
 	cetakData(data, nData)
-	fmt.Println("Data Peminjam Telah Diurutkan Menurut - Pinjaman.")
+	fmt.Println("Data Nasabah Telah Diurutkan Menurut - Pinjaman.")
 }
 
 func selectionSortTenor(A *tabPinjaman, n int) {
@@ -357,7 +357,7 @@ func selectionSortTenor(A *tabPinjaman, n int) {
 		pass++
 	}
 	cetakData(data, nData)
-	fmt.Println("Data Peminjam Telah Diurutkan Menurun - Tenor.")
+	fmt.Println("Data Nasabah Telah Diurutkan Menurun - Tenor.")
 }
 
 //tinggal edit func kebawah + status pembayaran belum ada :)
@@ -367,7 +367,7 @@ func hitungBunga(A *tabPinjaman, n int) {
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Println("┃         MENGHITUNG BUNGA & CICILAN        ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ Masukkan Suku Bunga Untuk Tiap Peminjam.  ┃")
+	fmt.Println("┃ Masukkan Suku Bunga Untuk Tiap Nasabah .  ┃")
 	fmt.Println("┃ Bunga Akan Dihitung Terhadap Jumlah       ┃")
 	fmt.Println("┃ Pinjaman dan Tenor Dalam Bulan.           ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
@@ -396,7 +396,7 @@ func pilihCari() {
 	var pilih int
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃           PENCARIAN DATA PEMINJAM         ┃")
+	fmt.Println("┃           PENCARIAN DATA NASABAH          ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	fmt.Println("┃ [1] Cari Data Peminjam dengan ID          ┃")
 	fmt.Println("┃ [2] Cari Data Peminjam dengan Pinjaman    ┃")
