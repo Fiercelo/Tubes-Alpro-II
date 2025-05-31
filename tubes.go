@@ -83,13 +83,9 @@ func menu() {
 				pilihCari()
 			}
 		case 6:
-			if nData == 0 {
-				fmt.Println("Belum Ada Data Nasabah. Silakan Tambahkan Terlebih Dahulu!")
-			} else {
-				cetakData(data, nData)
-				bayarCicilan(&data, nData)
-				statusPembayaran(&data, nData)
-			}
+			statusPembayaran(&data, nData)
+			bayarCicilan(&data, nData)
+			statusPembayaran(&data, nData)
 		case 7:
 			if nData == 0 {
 				fmt.Println("Belum Ada Data Untuk Ditampilkan. Silakan Tambahkan Terlebih Dahulu!")
@@ -114,19 +110,19 @@ func tambahData(A *tabPinjaman, n *int) {
 	var idP string
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃         TAMBAH DATA NASABAH BARU          ┃")
+	fmt.Println("┃          TAMBAH DATA NASABAH BARU         ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	fmt.Println("┃ PENJELASAN                                ┃")
 	fmt.Println("┃ Setiap Nasabah Punya:                     ┃")
-	fmt.Println("┃ ID unik, nama, jumlah pinjaman, dan tenor ┃")
-	fmt.Println("┃ NOTE: Maksimal 5 huruf/angka untuk ID dan ┃")
-	fmt.Println("┃       maksimal 2 kata untuk nama          ┃")
+	fmt.Println("┃ ID Unik, Nama, Jumlah Pinjaman, dan Tenor ┃")
+	fmt.Println("┃ NOTE: Maksimal 5 Huruf/Angka Untuk ID dan ┃")
+	fmt.Println("┃       Maksimal 2 Kata Untuk Nama          ┃")
 	fmt.Println("┃                                           ┃")
 	fmt.Println("┃ Contoh                                    ┃")
 	fmt.Println("┃  ID Unik                : CL01            ┃")
 	fmt.Println("┃  Nama Nasabah           : Dedi_Gusnaldi   ┃")
-	fmt.Println("┃  Jumlah Nasabah  (Rp)   : 10000000        ┃")
-	fmt.Println("┃  Tenor Nasabah  (bulan) : 12              ┃")
+	fmt.Println("┃  Jumlah Pinjaman (Rp)   : 10000000        ┃")
+	fmt.Println("┃  Tenor Pinjaman (bulan) : 12              ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
 	fmt.Print("Jumlah Data yang Ingin Dimasukkan (Max 10): ")
@@ -140,7 +136,7 @@ func tambahData(A *tabPinjaman, n *int) {
 
 		for i = 0; i < jumlah; i++ {
 			fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-			fmt.Printf("Data nasabah ke-%d\n", *n+1)
+			fmt.Printf("Data Nasabah ke-%d\n", *n+1)
 			for {
 				fmt.Print("ID unik                : ")
 				fmt.Scan(&idP)
@@ -213,7 +209,7 @@ func ubahData(A *tabPinjaman, n int) {
 		if A[i].id == id {
 			fmt.Println("Masukkan Data Baru Untuk Mengganti.")
 
-			fmt.Print("Nama Nasabah           : ")
+			fmt.Print("Nama Nasabah          : ")
 			fmt.Scan(&A[i].nama)
 
 			fmt.Print("Jumlah Pinjaman (Rp)   : ")
@@ -364,13 +360,14 @@ func selectionSortTenor(A *tabPinjaman, n int) {
 	fmt.Println("Data Nasabah Telah Diurutkan Menurun - Tenor.")
 }
 
+//tinggal edit func kebawah + status pembayaran belum ada :)
 func hitungBunga(A *tabPinjaman, n int) {
 	var i int
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Println("┃         MENGHITUNG BUNGA & CICILAN        ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ Masukkan Suku Bunga Untuk Tiap Nasabah .  ┃")
+	fmt.Println("┃ Masukkan Suku Bunga Untuk Tiap Nasabah.   ┃")
 	fmt.Println("┃ Bunga Akan Dihitung Terhadap Jumlah       ┃")
 	fmt.Println("┃ Pinjaman dan Tenor Dalam Bulan.           ┃")
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
@@ -394,14 +391,15 @@ func hitungBunga(A *tabPinjaman, n int) {
 	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
+//func pilihCari udh diedit
 func pilihCari() {
 	var pilih int
 
 	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 	fmt.Println("┃           PENCARIAN DATA NASABAH          ┃")
 	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
-	fmt.Println("┃ [1] Cari Data Peminjam dengan ID          ┃")
-	fmt.Println("┃ [2] Cari Data Peminjam dengan Pinjaman    ┃")
+	fmt.Println("┃ [1] Cari Data Nasabah dengan ID           ┃")
+	fmt.Println("┃ [2] Cari Data Nasabah dengan Pinjaman     ┃")
 	fmt.Println("┃ [3] Cari Pinjaman Terendah                ┃")
 	fmt.Println("┃ [4] Cari Pinjaman Tertinggi               ┃")
 	fmt.Println("┃ [0] Back                                  ┃")
@@ -561,16 +559,16 @@ func bayarCicilan(A *tabPinjaman, n int) {
 
 func statusPembayaran(A *tabPinjaman, n int) {
 	var i int
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Println("┃ ID    ┃ Nama                 ┃ Pinjaman    ┃ Tenor ┃ Total Bayar  ┃ Cicilan    ┃ Sisa Bayar     ┃     Status     ┃")
-	fmt.Println("┣━━━━━━━┃━━━━━━━━━━━━━━━━━━━━━━┃━━━━━━━━━━━━━┃━━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Println("┃ ID   ┃ Nama         ┃ Pinjaman   ┃ Tenor ┃ Total Bayar  ┃ Cicilan    ┃ Sisa Bayar     ┃     Status     ┃")
+	fmt.Println("┣━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━┃━━━━━━━━━━━━━━┃━━━━━━━━━━━━┃━━━━━━━━━━━━━━━━┫━━━━━━━━━━━━━━━━┫")
 
 	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-5s ┃ %-20s ┃ %-11d ┃ %-5d ┃ %-12.0f ┃ %-10.0f ┃ %-14.0f ┃ %-14s ┃\n",
+		fmt.Printf("┃ %-4s ┃ %-12s ┃ %-10d ┃ %-5d ┃ %-12.0f ┃ %-10.0f ┃ %-14.0f ┃ %-14s ┃\n",
 			A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].sisa, A[i].status)
 	}
 
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 }
 
 func cetakData(A tabPinjaman, n int) {
@@ -588,12 +586,12 @@ func cetakData(A tabPinjaman, n int) {
 func cetakKredit(A tabPinjaman, n int) {
 	var i int
 
-	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃ %-11s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan", "Status")
-	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
+	fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
+	fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13s ┃ %-5s ┃ %-16s ┃ %-17s ┃\n", "ID", "Nama", "Pinjaman", "Tenor", "Total Pembayaran", "Cicilan per Bulan")
+	fmt.Println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫")
 	for i = 0; i < n; i++ {
-		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃ %-11s ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit, A[i].status)
+		fmt.Printf("┃ %-5s ┃ %-25s ┃ %-13d ┃ %-5d ┃ %-16.0f ┃ %-17.0f ┃\n", A[i].id, A[i].nama, A[i].pinjaman, A[i].tenor, A[i].tBunga, A[i].kredit)
 	}
-	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+	fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 
 }
