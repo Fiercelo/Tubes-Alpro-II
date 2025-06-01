@@ -138,7 +138,7 @@ func tambahData(A *tabPinjaman, n *int) {
 			fmt.Println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 			fmt.Printf("Data Nasabah ke-%d\n", *n+1)
 			for {
-				fmt.Print("ID unik                : ")
+				fmt.Print("ID Unik                : ")
 				fmt.Scan(&idP)
 				if !IDSama(*A, *n, idP) {
 					A[*n].id = idP
@@ -335,7 +335,7 @@ func selectionSortPinjaman(A *tabPinjaman, n int) {
 		pass++
 	}
 	cetakData(data, nData)
-	fmt.Println("Data Nasabah Telah Diurutkan Menurut - Pinjaman.")
+	fmt.Println("Data Nasabah Telah Diurutkan Menurun - Pinjaman.")
 }
 
 func selectionSortTenor(A *tabPinjaman, n int) {
@@ -464,11 +464,10 @@ func cariBinaryData(A *tabPinjaman, n int) {
 		if A[tengah].pinjaman == pinjaman {
 			fmt.Println("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
 			fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[tengah].id)
-			fmt.Printf("┃ %-20s : %-18v ┃\n", "ID: ", A[tengah].nama)
-			fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[tengah].pinjaman)
-			fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[tengah].tenor)
-			fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[tengah].tBunga)
-			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Total Pembayaran: ", A[tengah].tBunga)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Nama: ", A[tengah].nama)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Pinjaman: ", A[tengah].pinjaman)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Tenor: ", A[tengah].tenor)
+			fmt.Printf("┃ %-20s : %-18v ┃\n", "Totsl Pembayaran: ", A[tengah].tBunga)
 			fmt.Printf("┃ %-20s : %-18.0f ┃\n", "Cicilan per Bulan: ", A[tengah].kredit)
 			fmt.Println("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
 			found = true
